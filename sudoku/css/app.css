@@ -1,0 +1,47 @@
+table.sudoku {
+  border: 1px solid #000000;
+  display: inline-block;
+}
+table.sudoku td {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #000000;
+}
+
+table.sudoku input[type=text] {
+  border: 0;
+  width: 44px;
+  height: 44px;
+  text-align: center;
+  font-size: 24px;
+}
+table.sudoku input[type=text]:focus {
+  outline: 0;
+}
+table.sudoku input[type=text].error {
+  background-color: #E57373;
+}
+table.sudoku input[type=text].success {
+  background-color: #81C784;
+}
+
+.page-index .validate-btn {
+  display: block;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 3px;
+  font-weight: 400;
+  font-size: 17px;
+  padding: 20px 30px 20px 30px;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  line-height: normal;
+  white-space: nowrap;
+  background-color: #BDBDBD;
+  -webkit-transition: background 200ms;
+  transition: background 200ms;
+}
+.page-index .validate-btn:hover {
+  background-color: #9E9E9E;
+}
