@@ -1,6 +1,25 @@
 (function ($) {
 
   // TODO use templating engine
+  var MAIN_TABLE_LAYOUT =
+    '<tbody>' +
+      '<tr>' +
+        '<td></td>' +
+        '<td></td>' +
+        '<td></td>' +
+      '</tr>' +
+      '<tr>' +
+        '<td></td>' +
+        '<td></td>' +
+        '<td></td>' +
+      '</tr>' +
+      '<tr>' +
+        '<td></td>' +
+        '<td></td>' +
+        '<td></td>' +
+      '</tr>' +
+    '</tbody>';
+
   var SINGLE_TABLE =
     '<table>' +
     '<tbody>' +
@@ -89,7 +108,7 @@
     return Math.floor(Math.random() * 9) + 1;
   }
 
-  function UberSudoku(elem, options) {
+  function UBSudoku(elem, options) {
     this.$elem = $(elem);
     this.options = options;
 
@@ -102,10 +121,11 @@
     this.errorColIndexes = [];
     this.errorTableIndexes = [];
 
+    // automatically initialize the sudoku board
     this._init();
   }
 
-  UberSudoku.prototype._rowColTo81 = function (row, col) {
+  UBSudoku.prototype._rowColTo81 = function (row, col) {
     return (row * 9) + col;
   };
 
@@ -113,11 +133,11 @@
    * Method to initialize the Uber sudoku game :)
    * @private
    */
-  UberSudoku.prototype._init = function () {
+  UBSudoku.prototype._init = function () {
     // don't need to initialize if element length is 0 or
     //   data `uber.sudoku` already exists
     if (this.$elem.length === 0 ||
-        this.$elem.data('uber.sudoku')) {
+        this.$elem.data('ub.sudoku')) {
       return;
     }
 
@@ -125,6 +145,7 @@
 
     // create the tables
     // TODO this could use templating engine
+    this.$elem.append(MAIN_TABLE_LAYOUT);
     this.$elem.find('tr').each(function (ir) {
       // ir = index row
       var $thisRow = $(this);
@@ -161,11 +182,11 @@
 
   };
 
-  UberSudoku.prototype.generateRandomData = function () {
+  UBSudoku.prototype.generateRandomData = function () {
 
   };
 
-  UberSudoku.prototype.setCellValue = function (row, col, val) {
+  UBSudoku.prototype.setCellValue = function (row, col, val) {
     var target = 'input[data-row=' + row + '][data-col=' + col + ']';
     this.$elem.find(target).val(val);
   };
@@ -178,7 +199,7 @@
    * @return {boolean} `true` if there's an error
    * @private
    */
-  UberSudoku.prototype._isRowOrColumnError = function (isCheckingRow, index) {
+  UBSudoku.prototype._isRowOrColumnError = function (isCheckingRow, index) {
     if ((isCheckingRow && this.errorRowIndexes.indexOf(index) > -1) ||
         (!isCheckingRow && this.errorColIndexes.indexOf(index) > -1)) {
       return true;
@@ -209,7 +230,7 @@
    * @param rowIndex {number} row index to check
    * @returns {boolean} `true` if there's an error in the row (duplicate number)
    */
-  UberSudoku.prototype.isRowError = function (rowIndex) {
+  UBSudoku.prototype.isRowError = function (rowIndex) {
     return this._isRowOrColumnError(true, rowIndex);
   };
 
@@ -218,7 +239,7 @@
    * @param colIndex {number} column index to check
    * @returns {boolean} `true` if there's an error in the column (duplicate number)
    */
-  UberSudoku.prototype.isColumnError = function (colIndex) {
+  UBSudoku.prototype.isColumnError = function (colIndex) {
     return this._isRowOrColumnError(false, colIndex);
   };
 
@@ -227,7 +248,7 @@
    * @param tableSectionIndex {number} the index of the table group (0 - 8)
    * @return {boolean} `true` if there's a duplicate number in the table group
    */
-  UberSudoku.prototype.isTableSectionError = function (tableSectionIndex) {
+  UBSudoku.prototype.isTableSectionError = function (tableSectionIndex) {
     var hasTableSectionError = false;
 
     this.$elem.find('table[data-section=' + tableSectionIndex + ']').each(function () {
@@ -258,17 +279,20 @@
    * @returns {number} the table group index (0 - 8)
    * @private
    */
-  UberSudoku.prototype._getTableSectionIndex = function (rowIndex, colIndex) {
+  UBSudoku.prototype._getTableSectionIndex = function (rowIndex, colIndex) {
     return Math.floor(rowIndex / 3) + Math.floor(colIndex / 3);
   };
 
   /**
-   * Return an object that contains keys:
+   * Method to check whether a particular cell is good
+   * @param rowIndex {number} row index
+   * @param colIndex {number} column index
+   * @return {object} it contains keys:
    * `isRowError` -> `true` if row is error
    * `isColumnError` -> `true` if column is error
    * `isTableError` -> `true` if the table section is error
    */
-  UberSudoku.prototype.isCellOk = function (rowIndex, colIndex) {
+  UBSudoku.prototype.checkCell = function (rowIndex, colIndex) {
     return {
       rowError: this.isRowError(rowIndex),
       columnError: this.isColumnError(colIndex),
@@ -279,7 +303,7 @@
   /**
    * Clear all errors related stuff
    */
-  UberSudoku.prototype._clearErrors = function () {
+  UBSudoku.prototype._clearErrors = function () {
     this.errorColIndexes = [];
     this.errorRowIndexes = [];
     this.errorTableIndexes = [];
@@ -291,7 +315,7 @@
    * Each table section cannot have duplicate number
    * Each row and each column cannot have any duplicate number
    */
-  UberSudoku.prototype.validate = function () {
+  UBSudoku.prototype.validate = function () {
     // clear out all error classes first
     // this will also clear out the error indexes container
     this._clearErrors();
@@ -302,7 +326,7 @@
     // hard code to 9 for now since we only have 9x9 table
     for (rowIndex = 0; rowIndex < 9; rowIndex++) {
       for (colIndex = 0; colIndex < 9; colIndex++) {
-        var obj = this.isCellOk(rowIndex, colIndex);
+        var obj = this.checkCell(rowIndex, colIndex);
         if (obj.rowError && this.errorRowIndexes.indexOf(rowIndex) === -1) {
           this.errorRowIndexes.push(rowIndex);
         }
@@ -354,7 +378,7 @@
   /**
    * Method to fill all cells right away
    */
-  UberSudoku.prototype.cheatFill = function () {
+  UBSudoku.prototype.cheatFill = function () {
     // just fill the answer in
     var self = this;
     this.$elem.find('input').each(function () {
@@ -365,16 +389,16 @@
     });
   };
 
-  var old = $.fn.uberSudoku;
+  var old = $.fn.ubSudoku;
 
-  $.fn.uberSudoku = function (opt) {
+  $.fn.ubSudoku = function (opt) {
     return this.each(function () {
       var $this = $(this);
-      var data = $this.data('uber.sudoku');
-      var options = $.extend({}, UberSudoku.DEFAULTS, $this.data(), typeof opt === 'object' && opt);
+      var data = $this.data('ub.sudoku');
+      var options = $.extend({}, UBSudoku.DEFAULTS, $this.data(), typeof opt === 'object' && opt);
 
       if (!data) {
-        $this.data('uber.sudoku', (data = new UberSudoku(this, options)));
+        $this.data('ub.sudoku', (data = new UBSudoku(this, options)));
       }
 
       if (typeof opt === 'string' && typeof data[opt] === 'function') {
@@ -384,10 +408,10 @@
   };
 
   /**
-   * call this if you want to use the previous `uberSudoku`
+   * call this if you want to use the previous `ubSudoku`
    */
-  $.fn.uberSudoku.noConflict = function () {
-    $.fn.uberSudoku = old;
+  $.fn.ubSudoku.noConflict = function () {
+    $.fn.ubSudoku = old;
     return this;
   };
 
@@ -395,7 +419,7 @@
   // =============
 
   $(function () {
-    $('[data-uber-sudoku]').uberSudoku();
+    $('[data-ub-sudoku]').ubSudoku();
   });
 
 
@@ -403,12 +427,12 @@
   // ========================
 
   $(document).on('click.ub.sudoku', '[data-ub-trigger=validate]', function () {
-    var data = $($(this).data('ubTarget')).data('uber.sudoku');
+    var data = $($(this).data('ubTarget')).data('ub.sudoku');
     if (data) {
       data.validate();
     }
   }).on('click.ub.sudoku', '[data-ub-trigger=cheatFill]', function () {
-    var data = $($(this).data('ubTarget')).data('uber.sudoku');
+    var data = $($(this).data('ubTarget')).data('ub.sudoku');
     if (data) {
       data.cheatFill();
     }

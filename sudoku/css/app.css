@@ -1,28 +1,28 @@
-[data-uber-sudoku] {
+[data-ub-sudoku] {
   border: 1px solid #000000;
   display: inline-block;
 }
-[data-uber-sudoku] td {
+[data-ub-sudoku] td {
   width: 44px;
   height: 44px;
   border: 1px solid #000000;
 }
 
-[data-uber-sudoku] input[type=text] {
+[data-ub-sudoku] input[type=text] {
   border: 0;
   width: 44px;
   height: 44px;
   text-align: center;
   font-size: 24px;
 }
-[data-uber-sudoku] input[type=text]:focus {
+[data-ub-sudoku] input[type=text]:focus {
   outline: 0;
 }
-[data-uber-sudoku] input[type=text].error,
-[data-uber-sudoku] table.error input[type=text] {
+[data-ub-sudoku] input[type=text].error,
+[data-ub-sudoku] table.error input[type=text] {
   background-color: #E57373;
 }
-[data-uber-sudoku] input[type=text].success {
+[data-ub-sudoku] input[type=text].success {
   background-color: #81C784;
 }
 
