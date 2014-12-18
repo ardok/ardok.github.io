@@ -8,7 +8,8 @@
 <body class="page-index">
 <h1>Sudoku</h1>
 
-<table class="sudoku" id="sudoku-table">
+<table id="sudoku-table"
+       data-uber-sudoku>
 <tbody>
 <tr>
   <td></td>
@@ -34,47 +35,11 @@
   Validate
 </button>
 
-<button class="cheat-fill-btn">
+<button class="cheat-fill-btn"
+        data-ub-trigger="cheatFill"
+        data-ub-target="#sudoku-table">
   Cheat Fill
 </button>
-
-<!--<table class="sudoku">-->
-  <!--<tbody>-->
-  <!--<tr>-->
-    <!--<td>-->
-      <!--<input type="text" maxlength="1">-->
-    <!--</td>-->
-    <!--<td>-->
-      <!--<input type="text" maxlength="1">-->
-    <!--</td>-->
-    <!--<td>-->
-      <!--<input type="text" maxlength="1">-->
-    <!--</td>-->
-  <!--</tr>-->
-  <!--<tr>-->
-    <!--<td>-->
-      <!--<input type="text" maxlength="1">-->
-    <!--</td>-->
-    <!--<td>-->
-      <!--<input type="text" maxlength="1">-->
-    <!--</td>-->
-    <!--<td>-->
-      <!--<input type="text" maxlength="1">-->
-    <!--</td>-->
-  <!--</tr>-->
-  <!--<tr>-->
-    <!--<td>-->
-      <!--<input type="text" maxlength="1">-->
-    <!--</td>-->
-    <!--<td>-->
-      <!--<input type="text" maxlength="1">-->
-    <!--</td>-->
-    <!--<td>-->
-      <!--<input type="text" maxlength="1">-->
-    <!--</td>-->
-  <!--</tr>-->
-  <!--</tbody>-->
-<!--</table>-->
 
 <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="js/ub-sudoku.js"></script>
