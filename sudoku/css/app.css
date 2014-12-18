@@ -6,22 +6,31 @@
   border: 1px solid #000000;
 }
 
-[data-ub-sudoku] input[type=text] {
+[data-ub-sudoku] input[type=number] {
   border: 0;
   width: 24px;
   height: 24px;
   text-align: center;
   font-size: 18px;
 }
-[data-ub-sudoku] input[type=text]:focus {
+[data-ub-sudoku] input[type=number]:focus {
   outline: 0;
 }
-[data-ub-sudoku] input[type=text].error,
-[data-ub-sudoku] table.error input[type=text] {
+[data-ub-sudoku] input[type=number].error,
+[data-ub-sudoku] table.error input[type=number] {
   background-color: #E57373;
 }
-[data-ub-sudoku] input[type=text].success {
+[data-ub-sudoku] input[type=number].success {
   background-color: #81C784;
+}
+[data-ub-sudoku] input[type=number] {
+  -moz-appearance: textfield;
+}
+[data-ub-sudoku] input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+[data-ub-sudoku] input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
 }
 
 .page-index .validate-btn {
@@ -46,7 +55,7 @@
 }
 
 @media all and (min-width: 768px) {
-  [data-ub-sudoku] input[type=text] {
+  [data-ub-sudoku] input[type=number] {
     width: 44px;
     height: 44px;
     font-size: 24px;

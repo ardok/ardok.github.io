@@ -25,35 +25,35 @@
     '<tbody>' +
       '<tr>' +
         '<td>' +
-          '<input type="text" maxlength="1">' +
+          '<input type="number" maxlength="1">' +
         '</td>' +
         '<td>' +
-          '<input type="text" maxlength="1">' +
+          '<input type="number" maxlength="1">' +
         '</td>' +
         '<td>' +
-          '<input type="text" maxlength="1">' +
-        '</td>' +
-      '</tr>' +
-      '<tr>' +
-        '<td>' +
-          '<input type="text" maxlength="1">' +
-        '</td>' +
-        '<td>' +
-          '<input type="text" maxlength="1">' +
-        '</td>' +
-        '<td>' +
-          '<input type="text" maxlength="1">' +
+          '<input type="number" maxlength="1">' +
         '</td>' +
       '</tr>' +
       '<tr>' +
         '<td>' +
-          '<input type="text" maxlength="1">' +
+          '<input type="number" maxlength="1">' +
         '</td>' +
         '<td>' +
-          '<input type="text" maxlength="1">' +
+          '<input type="number" maxlength="1">' +
         '</td>' +
         '<td>' +
-          '<input type="text" maxlength="1">' +
+          '<input type="number" maxlength="1">' +
+        '</td>' +
+      '</tr>' +
+      '<tr>' +
+        '<td>' +
+          '<input type="number" maxlength="1">' +
+        '</td>' +
+        '<td>' +
+          '<input type="number" maxlength="1">' +
+        '</td>' +
+        '<td>' +
+          '<input type="number" maxlength="1">' +
         '</td>' +
       '</tr>' +
     '</tbody>' +
@@ -178,6 +178,37 @@
       if (self.BOARD_SHOW[row][col] === 1) {
         $this.val(self.BOARD_VALUE[row][col]).attr('disabled', 'disabled');
       }
+
+      // now, we need to limit the value inputted into numbers only
+      var prevInput = '';
+      $this.on('keyup', function (evt) {
+        // we set the input type to be number, hence it pretty sucks since
+        //   when there's a non-number input, `.val()` will return empty string
+        var inputValue = $this.val();
+
+        // TODO there should be an easier way to do this
+        if (inputValue.length > 1) {
+          $this.val(inputValue.charAt(0));
+        } else if (inputValue === '0') {
+          $this.val('');
+        } else if (this.checkValidity && this.checkValidity()) {
+            prevInput = inputValue;
+        } else {
+            $this.val(prevInput);
+        }
+
+        // TODO maybe will get remove later
+//        if (inputValue.length === 1 && inputValue !== '0') {
+//          prevInput = inputValue;
+//        } else {
+//          if (prevInput === '0' || inputValue === '0') {
+//            $this.val('');
+//          } else if (inputValue === '') {
+//            // when there's a non-number char, `inputValue` will be empty
+//            $this.val(prevInput);
+//          }
+//        }
+      });
     });
 
   };
