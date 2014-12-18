@@ -1,5 +1,6 @@
 (function ($) {
 
+  // TODO use templating engine
   var SINGLE_TABLE =
     '<table>' +
     '<tbody>' +
@@ -97,17 +98,9 @@
     this.BOARD_VALUE = BOARD_VALUE[index];
     this.BOARD_SHOW = BOARD_SHOW[index];
 
-    this.matrixCache = [];
-    // initialize the array to be 9x9
-    var i = 0;
-    var j = 0;
-    for (i = 0; i < 9; i++) {
-      this.matrixCache.push([]);
-      for (j = 0; j < 9; j++) {
-        this.matrixCache[i].push(0);
-      }
-    }
-    // now matrixCache is [[], [], []...] 9 arrays with 9 values in each
+    this.errorRowIndexes = [];
+    this.errorColIndexes = [];
+    this.errorTableIndexes = [];
 
     this._init();
   }
@@ -116,6 +109,10 @@
     return (row * 9) + col;
   };
 
+  /**
+   * Method to initialize the Uber sudoku game :)
+   * @private
+   */
   UberSudoku.prototype._init = function () {
     // don't need to initialize if element length is 0 or
     //   data `uber.sudoku` already exists
@@ -127,6 +124,7 @@
     var self = this;
 
     // create the tables
+    // TODO this could use templating engine
     this.$elem.find('tr').each(function (ir) {
       // ir = index row
       var $thisRow = $(this);
@@ -135,6 +133,8 @@
         // ic = index col
         var $singleTable = $(SINGLE_TABLE);
         $(this).append($singleTable);
+
+        $singleTable.attr('data-section', (ir * 3) + ic);
 
         $singleTable.find('input').each(function (ip) {
           // ip = index input
@@ -170,80 +170,71 @@
     this.$elem.find(target).val(val);
   };
 
-
-  UberSudoku.prototype.checkRow = function (rowIndex) {
-  };
-
-  UberSudoku.prototype.checkColumn = function (colIndex) {
-
-  };
-
-  UberSudoku.prototype.checkCell = function (rowIndex, colIndex) {
-
-  };
-
-  UberSudoku.prototype._getErrorIndexes = function (isRowCheck) {
-    var i = 0;
-    var j = 0;
-    var target = null;
-    var $target = null;
-    var value = 0;
-    var inputs = [];
-    var errorIndexes = [];
-
-    // this is our main validation loop check
-    for (i = 0; i < 9; i++) {
-      for (j = 0; j < 9; j++) {
-        if (isRowCheck) {
-          target = 'input[data-row=' + i + '][data-col=' + j + ']';
-        } else {
-          target = 'input[data-col=' + i + '][data-row=' + j + ']';
-        }
-        $target = this.$elem.find(target);
-        value = $target.val();
-
-        if (value !== '' && inputs.indexOf(value) > -1) {
-          // input already exists, push the error index and break this loop
-          errorIndexes.push(i);
-          break;
-        } else {
-          // input does not exist yet, push it in
-          inputs.push(value);
-        }
-      }
-
-      // for each iteration, reset `inputs`
-      inputs = [];
+  /**
+   * Method to check whether there's an error with either row or column
+   * @param isCheckingRow {boolean} `true` if you're checking for row, `false` if you're checking for column
+   * @param index {number} the index to check, row index if `isCheckingRow` is `true`,
+   *                       column index if `isCheckingRow` is `false`
+   * @return {boolean} `true` if there's an error
+   * @private
+   */
+  UberSudoku.prototype._isRowOrColumnError = function (isCheckingRow, index) {
+    if ((isCheckingRow && this.errorRowIndexes.indexOf(index) > -1) ||
+        (!isCheckingRow && this.errorColIndexes.indexOf(index) > -1)) {
+      return true;
     }
 
-    return errorIndexes;
+    var isError = false;
+    var inputs = [];
+    var target = null;
+    if (isCheckingRow) {
+      target = 'input[data-row=' + index + ']';
+    } else {
+      target = 'input[data-col=' + index + ']';
+    }
+    this.$elem.find(target).each(function () {
+      var value = $(this).val();
+      if (value !== '' && inputs.indexOf(value) > -1) {
+        isError = true;
+        return false;
+      } else {
+        inputs.push(value);
+      }
+    });
+    return isError;
   };
 
   /**
-   * Clear all error classes
+   * Method to check whether there's an error in the row
+   * @param rowIndex {number} row index to check
+   * @returns {boolean} `true` if there's an error in the row (duplicate number)
    */
-  UberSudoku.prototype._clearErrors = function () {
-    this.$elem.find('table').removeClass('error');
-    this.$elem.find('input').removeClass('error');
+  UberSudoku.prototype.isRowError = function (rowIndex) {
+    return this._isRowOrColumnError(true, rowIndex);
   };
 
   /**
-   * Each table section cannot have duplicate number
-   * Each row and each column cannot have any duplicate number
+   * Method to check wheter there's an error in the column
+   * @param colIndex {number} column index to check
+   * @returns {boolean} `true` if there's an error in the column (duplicate number)
    */
-  UberSudoku.prototype.validate = function () {
-    // clear out all error classes first
-    this._clearErrors();
+  UberSudoku.prototype.isColumnError = function (colIndex) {
+    return this._isRowOrColumnError(false, colIndex);
+  };
 
-    // check each table section first
+  /**
+   * Check whether the table group has an error (there's a duplicate number in the table group)
+   * @param tableSectionIndex {number} the index of the table group (0 - 8)
+   * @return {boolean} `true` if there's a duplicate number in the table group
+   */
+  UberSudoku.prototype.isTableSectionError = function (tableSectionIndex) {
     var hasTableSectionError = false;
 
-    this.$elem.find('table').each(function () {
+    this.$elem.find('table[data-section=' + tableSectionIndex + ']').each(function () {
 
       var $thisTable = $(this);
       var inputs = [];
 
-      // we want to check that each table has unique input
       $thisTable.find('input').each(function () {
 
         var value = $(this).val();
@@ -255,31 +246,103 @@
 
       });
 
-      if (hasTableSectionError) {
-        $thisTable.addClass('error');
-      }
-
     });
 
-    // get the error indexes for row and column
-    var errorRowIndexes = this._getErrorIndexes(true);
-    var errorColIndexes = this._getErrorIndexes(false);
+    return hasTableSectionError;
+  };
 
-    // now add error class to each input that has error
+  /**
+   * Use the row index and column index to get the table group index
+   * @param rowIndex {number} row index
+   * @param colIndex {number} column index
+   * @returns {number} the table group index (0 - 8)
+   * @private
+   */
+  UberSudoku.prototype._getTableSectionIndex = function (rowIndex, colIndex) {
+    return Math.floor(rowIndex / 3) + Math.floor(colIndex / 3);
+  };
+
+  /**
+   * Return an object that contains keys:
+   * `isRowError` -> `true` if row is error
+   * `isColumnError` -> `true` if column is error
+   * `isTableError` -> `true` if the table section is error
+   */
+  UberSudoku.prototype.isCellOk = function (rowIndex, colIndex) {
+    return {
+      rowError: this.isRowError(rowIndex),
+      columnError: this.isColumnError(colIndex),
+      tableError: this.isTableSectionError(this._getTableSectionIndex(rowIndex, colIndex))
+    };
+  };
+
+  /**
+   * Clear all errors related stuff
+   */
+  UberSudoku.prototype._clearErrors = function () {
+    this.errorColIndexes = [];
+    this.errorRowIndexes = [];
+    this.errorTableIndexes = [];
+    this.$elem.find('table').removeClass('error');
+    this.$elem.find('input').removeClass('error');
+  };
+
+  /**
+   * Each table section cannot have duplicate number
+   * Each row and each column cannot have any duplicate number
+   */
+  UberSudoku.prototype.validate = function () {
+    // clear out all error classes first
+    // this will also clear out the error indexes container
+    this._clearErrors();
+
+    // populate the error indexes
+    var rowIndex = 0;
+    var colIndex = 0;
+    // hard code to 9 for now since we only have 9x9 table
+    for (rowIndex = 0; rowIndex < 9; rowIndex++) {
+      for (colIndex = 0; colIndex < 9; colIndex++) {
+        var obj = this.isCellOk(rowIndex, colIndex);
+        if (obj.rowError && this.errorRowIndexes.indexOf(rowIndex) === -1) {
+          this.errorRowIndexes.push(rowIndex);
+        }
+        if (obj.columnError && this.errorColIndexes.indexOf(colIndex) === -1) {
+          this.errorColIndexes.push(colIndex);
+        }
+        var tableIndex = this._getTableSectionIndex(rowIndex, colIndex);
+        if (obj.tableError && this.errorTableIndexes.indexOf(tableIndex) === -1) {
+          this.errorTableIndexes.push(tableIndex);
+        }
+      }
+    }
+
+    // now add error class to each input / table that has error
     var index = 0;
-    for (index = 0; index < errorRowIndexes.length; index++) {
-      this.$elem.find('input[data-row=' + errorRowIndexes[index] + ']').each(function () {
+    for (index = 0; index < this.errorRowIndexes.length; index++) {
+      this.$elem.find('input[data-row=' + this.errorRowIndexes[index] + ']').each(function () {
         $(this).addClass('error');
       });
     }
-    for (index = 0; index < errorColIndexes.length; index++) {
-      this.$elem.find('input[data-col=' + errorColIndexes[index] + ']').each(function () {
+    for (index = 0; index < this.errorColIndexes.length; index++) {
+      this.$elem.find('input[data-col=' + this.errorColIndexes[index] + ']').each(function () {
         $(this).addClass('error');
       });
+    }
+    for (index = 0; index < this.errorTableIndexes.length; index++) {
+      this.$elem.find('table[data-section=' + this.errorTableIndexes[index] + ']').addClass('error');
     }
 
     // check whether there's any error exists
-    if (!hasTableSectionError && errorRowIndexes.length === 0 && errorColIndexes.length === 0) {
+    // need to make sure that all inputs are filled
+    var allInputsFilled = [];
+    this.$elem.find('input').each(function () {
+      allInputsFilled.push($(this).val() !== '');
+    });
+
+    if (allInputsFilled.indexOf(false) === -1 &&
+        this.errorTableIndexes.length === 0 &&
+        this.errorRowIndexes.length === 0 &&
+        this.errorColIndexes.length === 0) {
       // hooray, no error
       this.$elem.find('input').each(function () {
         $(this).addClass('success');
