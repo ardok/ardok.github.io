@@ -3,30 +3,37 @@
 <head>
 <meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/ub-sudoku.css">
 <title>Sudoku</title>
 </head>
 <body class="page-index">
-<h1>Sudoku</h1>
+<h1 class="title">Uber Sudoku</h1>
 
-<table id="sudoku-table"
-       data-ub-sudoku>
-</table>
+<div class="table-wrapper">
+  <div class="toolbar">
+    <button class="btn"
+            data-ub-trigger="validate"
+            data-ub-target="#sudoku-table">
+      Validate
+    </button>
 
-<button class="validate-btn"
-        data-ub-trigger="validate"
-        data-ub-target="#sudoku-table">
-  Validate
-</button>
-
-<button class="cheat-fill-btn"
-        data-ub-trigger="cheatFill"
-        data-ub-target="#sudoku-table">
-  Cheat Fill
-</button>
+    <button class="cheat-fill-btn btn"
+            data-ub-trigger="cheatFill"
+            data-ub-target="#sudoku-table">
+      Cheat Fill
+    </button>
+    <img class="success-gif" src="" data-ub-lazy-src="http://i.giphy.com/YD52EUqEZ0yxG.gif">
+  </div>
+  <table id="sudoku-table"
+         data-ub-sudoku>
+  </table>
+</div>
 
 <script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/ub-lazy-src.js"></script>
 <script type="text/javascript" src="js/ub-sudoku.js"></script>
-<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>

@@ -1,0 +1,40 @@
+.page-index .title {
+  text-align: center;
+}
+
+.page-index .table-wrapper {
+  text-align: center;
+}
+
+.page-index .toolbar {
+  background-color: #607d8b;
+  border-radius: 3px 3px 0 0;
+  padding: 10px 0;
+  max-width: 316px; /* just to match the table width */
+  margin: 0 auto;
+  position: relative;
+}
+.page-index .btn {
+  display: inline-block;
+  padding: 10px 20px;
+}
+
+.page-index .success-gif {
+  border-radius: 3px;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  left: 0;
+  right: auto;
+  bottom: auto;
+  top: 100px;
+}
+
+@media all and (min-width: 768px) {
+  .page-index .toolbar {
+    max-width: 496px;
+  }
+  .page-index .success-gif {
+    top: 165px;
+  }
+}

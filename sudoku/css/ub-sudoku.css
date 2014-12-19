@@ -1,0 +1,72 @@
+[data-ub-sudoku] {
+  border: 1px solid #000000;
+  display: inline-block;
+}
+[data-ub-sudoku] td {
+  border: 1px solid #000000;
+}
+
+[data-ub-sudoku] input[type=number] {
+  border: 0;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  font-size: 18px;
+  background-color: #f6f1ea;
+  -webkit-animation: inputIn 300ms both;
+  animation: inputIn 300ms both;
+  -moz-appearance: textfield;
+  -ms-appearance: textfield;
+}
+[data-ub-sudoku] input[type=number]:focus {
+  outline: 0;
+}
+[data-ub-sudoku] input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+[data-ub-sudoku] input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+[data-ub-sudoku] input[type=number].error,
+[data-ub-sudoku] table.error input[type=number] {
+  background-color: #e57373;
+}
+[data-ub-sudoku] input[type=number].success {
+  background-color: #81c784;
+}
+
+@media all and (min-width: 768px) {
+  [data-ub-sudoku] input[type=number] {
+    width: 44px;
+    height: 44px;
+    font-size: 24px;
+  }
+}
+
+@-webkit-keyframes inputIn {
+  0.00% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  50.00% {
+    opacity: 1;
+  }
+  100.00% {
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+  }
+}
+@keyframes inputIn {
+  0.00% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  50.00% {
+    opacity: 1;
+  }
+  100.00% {
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+  }
+}
