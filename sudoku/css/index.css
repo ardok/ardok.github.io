@@ -22,18 +22,18 @@
 .page-index .success-gif {
   border-radius: 3px;
   position: absolute;
-  z-index: 1;
-  width: 100%;
   left: 0;
   right: auto;
   bottom: auto;
   top: 100px;
-  opacity: 0;
-  -webkit-transition: opacity 300ms;
-  transition: opacity 300ms;
+  width: 100%;
+  display: none;
+  z-index: 1;
 }
 .page-index .success-gif.show {
-  opacity: 1;
+  display: block;
+  -webkit-animation: gifShow 300ms both;
+  animation: gifShow 300ms both;
 }
 
 @media all and (min-width: 768px) {
@@ -42,5 +42,30 @@
   }
   .page-index .success-gif {
     top: 165px;
+  }
+}
+
+@-webkit-keyframes gifShow {
+  0.00% {
+    opacity: 0;
+    -webkit-transform: translateY(-50px);
+    transform: translateY(-50px);
+  }
+  100.00% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+@keyframes gifShow {
+  0.00% {
+    opacity: 0;
+    -webkit-transform: translateY(-50px);
+    transform: translateY(-50px);
+  }
+  100.00% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
   }
 }
