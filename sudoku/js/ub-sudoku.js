@@ -19,7 +19,6 @@
         '<td></td>' +
       '</tr>' +
     '</tbody>';
-
   var SINGLE_TABLE =
     '<table>' +
     '<tbody>' +
@@ -66,6 +65,7 @@
    * http://en.wikipedia.org/wiki/File:Sudoku-by-L2G-20050714.svg
    * http://en.wikipedia.org/wiki/File:Sudoku-by-L2G-20050714_solution.svg
    */
+  // TODO use a generator
   var BOARD_VALUE = [
     [
       [5, 3, 4, 6, 7, 8, 9, 1, 2],
@@ -78,11 +78,13 @@
       [2, 8, 7, 4, 1, 9, 6, 3, 5],
       [3, 4, 5, 2, 8, 6, 1, 7, 9]
     ]
+    // feel free to add more board here
   ];
 
   /**
    * 0 is hidden, 1 is shown
    */
+  // TODO use a generator
   var BOARD_SHOW = [
     [
       [1, 1, 0, 0, 1, 0, 0, 0, 0],
@@ -113,6 +115,7 @@
     this.options = options;
 
     // data to use
+    // TODO use a generator
     var index = options.ubBoardIndex || 0;
     this.BOARD_VALUE = BOARD_VALUE[index];
     this.BOARD_SHOW = BOARD_SHOW[index];
