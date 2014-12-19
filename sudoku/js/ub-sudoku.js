@@ -405,8 +405,8 @@
       this.$elem.find('input').each(function () {
         $(this).addClass('success');
       });
-      // trigger success event, we could pass in the table id
-      $(document).trigger('ub.sudoku.success', [this.$elem.attr('id')]);
+      // trigger success event, we could pass in some extra params here `.trigger('...', [..., ..., ...])`
+      this.$elem.trigger('ub.sudoku.success');
     }
 
   };
