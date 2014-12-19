@@ -3,9 +3,16 @@
 <head>
 <meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- TODO: combine and minify this block (output: all.min.css) -->
 <link rel="stylesheet" href="static/css/base.css">
-<link rel="stylesheet" href="static/css/index.css">
+<!-- endblock -->
+
+<!-- TODO: combine and minify this block (output: index.min.css) -->
 <link rel="stylesheet" href="static/css/ub-sudoku.css">
+<link rel="stylesheet" href="static/css/index.css">
+<!-- endblock -->
+
 <title>Sudoku</title>
 </head>
 <body class="page-index">
@@ -31,9 +38,15 @@
   </table>
 </div>
 
-<script type="text/javascript" src="static/js/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="static/js/ub-lazy-src.js"></script>
-<script type="text/javascript" src="static/js/ub-sudoku.js"></script>
+<!-- TODO: combine and minify this block (output: all.min.js) -->
+<script type="text/javascript" src="static/js/lib/jquery-2.1.1.min.js"></script>
+<!-- endblock -->
+
+<!-- TODO: combine and minify this block (output: index.min.js) -->
+<script type="text/javascript" src="static/js/modules/ub-lazy-src.js"></script>
+<script type="text/javascript" src="static/js/modules/ub-sudoku.js"></script>
 <script type="text/javascript" src="static/js/index.js"></script>
+<!-- endblock -->
+
 </body>
 </html>
