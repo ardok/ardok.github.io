@@ -24,7 +24,11 @@ body {
   -webkit-transition: background 200ms;
   transition: background 200ms;
 }
-.btn:hover {
+.btn[disabled] {
+  opacity: 0.8;
+  cursor: default;
+}
+.btn:hover:not([disabled]) {
   background-color: #9e9e9e;
 }
 
@@ -33,15 +37,35 @@ body {
   background-size: 75px 75px;
   width: 75px;
   height: 75px;
-  animation-name: rotate;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  -webkit-animation-name: rotate;
-  -webkit-animation-duration: 2s;
-  -webkit-animation-iteration-count: infinite;
+  -webkit-animation: spinnerRotate 2000ms infinite;
+  animation: spinnerRotate 2000ms infinite;
 }
 .spinner.center {
   position: relative;
   left: 50%;
   margin-left: -37px;
+}
+@-webkit-keyframes spinnerRotate {
+  0.00% {
+    transform: scale(0.5) rotate(0deg);
+    -webkit-transform: scale(0.5) rotate(0deg);
+  }
+  100% {
+    transform: scale(0.5) rotate(360deg);
+    -webkit-transform: scale(0.5) rotate(360deg);
+  }
+}
+@keyframes spinnerRotate {
+  0.00% {
+    transform: scale(0.5) rotate(0deg);
+    -ms-transform: scale(0.5) rotate(0deg);
+    -moz-transform: scale(0.5) rotate(0deg); /* won't work on FF without this */
+    -webkit-transform: scale(0.5) rotate(0deg);
+  }
+  100% {
+    transform: scale(0.5) rotate(360deg);
+    -ms-transform: scale(0.5) rotate(360deg);
+    -moz-transform: scale(0.5) rotate(360deg);
+    -webkit-transform: scale(0.5) rotate(360deg);
+  }
 }

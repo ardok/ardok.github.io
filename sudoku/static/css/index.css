@@ -8,19 +8,30 @@
 
 .page-index .toolbar {
   background-color: #607d8b;
-  border-radius: 3px 3px 0 0;
   padding: 10px 0;
   max-width: 316px; /* just to match the table width */
   margin: 0 auto;
   position: relative;
 }
+.page-index .toolbar.top {
+  border-radius: 3px 3px 0 0;
+}
+
 .page-index .btn {
   display: inline-block;
   padding: 5px 10px;
 }
-
+.page-index .validate-btn,
+.page-index .save-btn,
 .page-index .cheat-fill-btn {
   display: none;
+}
+
+.page-index .timer {
+  font-size: 18px;
+}
+.page-index .timer > span {
+  vertical-align: middle;
 }
 
 .page-index .success-gif-container {
@@ -52,6 +63,9 @@
   }
   .page-index .btn {
     padding: 10px 20px;
+  }
+  .page-index .timer {
+    font-size: 22px;
   }
   .page-index .success-gif-container {
     top: 165px;

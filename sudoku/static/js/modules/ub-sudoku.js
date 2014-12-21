@@ -110,6 +110,14 @@
     return Math.floor(Math.random() * 9) + 1;
   }
 
+  /**
+   * UBSudoku event triggers:
+   * `ub.sudoku.reset` -> When the game resets.
+   * `ub.sudoku.start` -> When the game is done generating data into the table.
+   * `ub.sudoku.done` -> When the validate method finally figures that the table is done!
+   *                     Filled with the correct numbers.
+   */
+
   function UBSudoku(elem, options) {
     this.$elem = $(elem);
     this.options = options;
@@ -127,6 +135,8 @@
     this.errorRowIndexes = [];
     this.errorColIndexes = [];
     this.errorTableIndexes = [];
+
+    this.isGenerating = false;
 
     // automatically initialize the sudoku board
     this._init();
@@ -172,18 +182,48 @@
           var col = (ip % 3) + (ic * 3);
           $this.attr('data-row', row);
           $this.attr('data-col', col);
+          $this.attr('disabled', 'disabled'); // disable everything first
         });
       });
     });
 
+  };
+
+  UBSudoku.prototype.reset = function () {
+    this.$elem.find('input').each(function () {
+      $(this).val('').removeClass('error').removeClass('success').removeClass('in');
+    });
+
+    // use timeout so that animation can play in different frame
+    var self = this;
+    setTimeout(function () {
+      self.generateData();
+    }, 0);
+
+    this.$elem.trigger('ub.sudoku.reset');
+  };
+
+  UBSudoku.prototype.generateData = function () {
+    if (this.isGenerating) {
+      return;
+    }
+
+    this.isGenerating = true;
+
+    // TODO this will be our generator
+    // unfortunately, because I'm lame, we will just use hard-coded value for now
+
+    var self = this;
     // put the values in
     this.$elem.find('input').each(function () {
       var $this = $(this);
       var row = parseInt($this.attr('data-row'));
       var col = parseInt($this.attr('data-col'));
 
-      if (self.BOARD_SHOW[row][col] === 1) {
-        $this.val(self.BOARD_VALUE[row][col]).attr('disabled', 'disabled');
+      if (self.BOARD_SHOW[row][col] === 0) {
+        $this.val(self.BOARD_VALUE[row][col]).addClass('in');
+      } else {
+        $this.removeAttr('disabled');
       }
 
       // now, we need to limit the value inputted into numbers only
@@ -199,17 +239,15 @@
         } else if (inputValue === '0') {
           $this.val('');
         } else if (this.checkValidity && this.checkValidity()) {
-            prevInput = inputValue;
+          prevInput = inputValue;
         } else {
-            $this.val(prevInput);
+          $this.val(prevInput);
         }
       });
     });
 
-  };
-
-  UBSudoku.prototype.generateRandomData = function () {
-
+    this.isGenerating = false;
+    this.$elem.trigger('ub.sudoku.start');
   };
 
   UBSudoku.prototype.setCellValue = function (row, col, val) {
@@ -397,7 +435,7 @@
         $(this).addClass('success');
       });
       // trigger success event, we could pass in some extra params here `.trigger('...', [..., ..., ...])`
-      this.$elem.trigger('ub.sudoku.success');
+      this.$elem.trigger('ub.sudoku.done');
     }
 
   };
@@ -457,20 +495,13 @@
   // DATA-API EVENT LISTENERS
   // ========================
 
-  function getData(elem) {
-    return $($(elem).data('ubTarget')).data('ub.sudoku');
-  }
-
-  $(document).on('click.ub.sudoku', '[data-ub-trigger=validate]', function () {
-    var data = getData(this);
-    if (data) {
-      data.validate();
+  $(document).on('click.ub.sudoku', '[data-ub-sudoku-trigger]', function () {
+    var $this = $(this);
+    if ($this.attr('disabled')) {
+      return;
     }
-  }).on('click.ub.sudoku', '[data-ub-trigger=cheatFill]', function () {
-    var data = getData(this);
-    if (data) {
-      data.cheatFill();
-    }
+    var $target = $($this.data('ubTarget'));
+    $target.ubSudoku($this.attr('data-ub-sudoku-trigger'));
   });
 
 })(jQuery);

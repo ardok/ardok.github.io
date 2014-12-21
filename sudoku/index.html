@@ -10,7 +10,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- TODO: combine and minify this block (output: all.min.css) -->
-<link rel="stylesheet" href="static/css/animation.css">
 <link rel="stylesheet" href="static/css/base.css">
 <!-- endblock -->
 
@@ -25,15 +24,30 @@
 <h1 class="title">Uber Sudoku</h1>
 
 <div class="table-wrapper">
-  <div class="toolbar">
-    <button class="btn"
-            data-ub-trigger="validate"
+  <div class="timer"
+       id="sudoku-timer">
+    <span data-ub-timer="hour"></span> :
+    <span data-ub-timer="minute"></span> :
+    <span data-ub-timer="second"></span>
+  </div>
+  <div class="toolbar top">
+    <button class="btn start-btn"
+            data-ub-sudoku-trigger="reset"
+            data-ub-target="#sudoku-table">
+      Start
+    </button>
+    <button class="btn validate-btn"
+            data-ub-sudoku-trigger="validate"
             data-ub-target="#sudoku-table">
       Validate
     </button>
-
-    <button class="cheat-fill-btn btn"
-            data-ub-trigger="cheatFill"
+    <button class="btn save-btn"
+            data-ub-target="#sudoku-table">
+      Save
+    </button>
+    <button class="btn cheat-fill-btn"
+            disabled="disabled"
+            data-ub-sudoku-trigger="cheatFill"
             data-ub-target="#sudoku-table">
       Cheat Fill
     </button>
@@ -53,6 +67,7 @@
 
 <!-- TODO: combine and minify this block (output: index.min.js) -->
 <script type="text/javascript" src="static/js/modules/ub-lazy-src.js"></script>
+<script type="text/javascript" src="static/js/modules/ub-timer.js"></script>
 <script type="text/javascript" src="static/js/modules/ub-sudoku.js"></script>
 <script type="text/javascript" src="static/js/index.js"></script>
 <!-- endblock -->
