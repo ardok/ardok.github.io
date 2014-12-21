@@ -199,18 +199,6 @@
         } else {
             $this.val(prevInput);
         }
-
-        // TODO maybe will get remove later
-//        if (inputValue.length === 1 && inputValue !== '0') {
-//          prevInput = inputValue;
-//        } else {
-//          if (prevInput === '0' || inputValue === '0') {
-//            $this.val('');
-//          } else if (inputValue === '') {
-//            // when there's a non-number char, `inputValue` will be empty
-//            $this.val(prevInput);
-//          }
-//        }
       });
     });
 
@@ -322,9 +310,9 @@
    * @param rowIndex {number} row index
    * @param colIndex {number} column index
    * @return {object} it contains keys:
-   * `isRowError` -> `true` if row is error
-   * `isColumnError` -> `true` if column is error
-   * `isTableError` -> `true` if the table section is error
+   * `rowError` -> `true` if row is error
+   * `columnError` -> `true` if column is error
+   * `tableError` -> `true` if the table section is error
    */
   UBSudoku.prototype.checkCell = function (rowIndex, colIndex) {
     return {
@@ -413,6 +401,9 @@
 
   /**
    * Method to fill all cells right away
+   *
+   * THIS IS NOT A SOLVER
+   * This method just fetched the actual data from `BOARD_VALUE`
    */
   UBSudoku.prototype.cheatFill = function () {
     // just fill the answer in
@@ -445,6 +436,7 @@
 
   /**
    * call this if you want to use the previous `ubSudoku`
+   * i.e. if there's previouse `ubSudoku` defined
    */
   $.fn.ubSudoku.noConflict = function () {
     $.fn.ubSudoku = old;
@@ -462,13 +454,17 @@
   // DATA-API EVENT LISTENERS
   // ========================
 
+  function getData(elem) {
+    return $($(elem).data('ubTarget')).data('ub.sudoku');
+  }
+
   $(document).on('click.ub.sudoku', '[data-ub-trigger=validate]', function () {
-    var data = $($(this).data('ubTarget')).data('ub.sudoku');
+    var data = getData(this);
     if (data) {
       data.validate();
     }
   }).on('click.ub.sudoku', '[data-ub-trigger=cheatFill]', function () {
-    var data = $($(this).data('ubTarget')).data('ub.sudoku');
+    var data = getData(this);
     if (data) {
       data.cheatFill();
     }

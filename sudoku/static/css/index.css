@@ -19,19 +19,24 @@
   padding: 10px 20px;
 }
 
-.page-index .success-gif {
-  border-radius: 3px;
+.page-index .success-gif-container {
   position: absolute;
   left: 0;
   right: auto;
   bottom: auto;
   top: 100px;
-  width: 100%;
   display: none;
   z-index: 1;
+  width: 100%;
+}
+.page-index .success-gif-container.show {
+  display: block;
+}
+.page-index .success-gif {
+  border-radius: 3px;
+  width: 100%;
 }
 .page-index .success-gif.show {
-  display: block;
   -webkit-animation: gifShow 300ms both;
   animation: gifShow 300ms both;
 }
@@ -40,7 +45,7 @@
   .page-index .toolbar {
     max-width: 496px;
   }
-  .page-index .success-gif {
+  .page-index .success-gif-container {
     top: 165px;
   }
 }

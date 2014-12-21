@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="robots" content="noindex">
+<!-- Not sure whether I want this to be crawl-able -->
+<!--<meta name="robots" content="noindex">-->
+
+<!-- if you have Android 5.0+, you know what this is ;) -->
+<meta name="theme-color" content="#607d8b">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- TODO: combine and minify this block (output: all.min.css) -->
+<link rel="stylesheet" href="static/css/animation.css">
 <link rel="stylesheet" href="static/css/base.css">
 <!-- endblock -->
 
@@ -31,7 +37,10 @@
             data-ub-target="#sudoku-table">
       Cheat Fill
     </button>
-    <img class="success-gif" alt="Success Minion Gif" data-ub-lazy-src="static/img/success.gif">
+    <div class="success-gif-container">
+      <div class="spinner center"></div>
+      <img class="success-gif" alt="Success Minion Gif" data-ub-lazy-src="static/img/success.gif">
+    </div>
   </div>
   <table id="sudoku-table"
          data-ub-sudoku>
