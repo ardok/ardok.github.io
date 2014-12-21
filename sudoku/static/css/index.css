@@ -16,7 +16,11 @@
 }
 .page-index .btn {
   display: inline-block;
-  padding: 10px 20px;
+  padding: 5px 10px;
+}
+
+.page-index .cheat-fill-btn {
+  display: none;
 }
 
 .page-index .success-gif-container {
@@ -45,6 +49,9 @@
 @media all and (min-width: 768px) {
   .page-index .toolbar {
     max-width: 496px;
+  }
+  .page-index .btn {
+    padding: 10px 20px;
   }
   .page-index .success-gif-container {
     top: 165px;

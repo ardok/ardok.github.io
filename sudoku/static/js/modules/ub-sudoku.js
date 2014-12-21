@@ -120,6 +120,10 @@
     this.BOARD_VALUE = BOARD_VALUE[index];
     this.BOARD_SHOW = BOARD_SHOW[index];
 
+    // hard code the total cell num to be 9x9
+    this.rowTotalNum = 9;
+    this.colTotalNum = 9;
+
     this.errorRowIndexes = [];
     this.errorColIndexes = [];
     this.errorTableIndexes = [];
@@ -345,9 +349,8 @@
     // populate the error indexes
     var rowIndex = 0;
     var colIndex = 0;
-    // hard code to 9 for now since we only have 9x9 table
-    for (rowIndex = 0; rowIndex < 9; rowIndex++) {
-      for (colIndex = 0; colIndex < 9; colIndex++) {
+    for (rowIndex = 0; rowIndex < this.rowTotalNum; rowIndex++) {
+      for (colIndex = 0; colIndex < this.colTotalNum; colIndex++) {
         var obj = this.checkCell(rowIndex, colIndex);
         if (obj.rowError && this.errorRowIndexes.indexOf(rowIndex) === -1) {
           this.errorRowIndexes.push(rowIndex);
