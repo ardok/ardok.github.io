@@ -35,6 +35,7 @@
 .page-index .success-gif {
   border-radius: 3px;
   width: 100%;
+  opacity: 0;
 }
 .page-index .success-gif.show {
   -webkit-animation: gifShow 300ms both;
