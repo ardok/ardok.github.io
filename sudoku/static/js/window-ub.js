@@ -10,7 +10,7 @@
       this.refresh();
     }
 
-    function _showNextMessage() {
+    UBNotification.prototype._showNextMessage = function () {
       if (this.messages.length === 0) {
         this.isRunning = false;
         return;
@@ -18,28 +18,29 @@
       var message = this.messages.shift();
       this.$notifier.find('.message').html(message);
       this.$notifier.addClass('show');
-      _delayClose.call(this);
-    }
+      this._delayClose();
+    };
 
-    function _run() {
+    UBNotification.prototype._run = function () {
       if (!this.isRunning) {
         this.isRunning = true;
-        _showNextMessage.call(this);
+        this._showNextMessage();
       }
-    }
+    };
 
-    function _delayClose() {
+    UBNotification.prototype._delayClose = function () {
       // Notifier automatically closes after 5 seconds.
       var self = this;
       self.idleTimeout = setTimeout(function () {
         self.hide();
       }, 5000);
-    }
+    };
 
     UBNotification.prototype.refresh = function ($notifierElement) {
       var self = this;
       clearTimeout(self.idleTimeout);
       self.$notifier.removeAttr('style');
+      self.$notifier.removeClass('show');
       self.$notifier.find('.message').html('');
       self.idleTimeout = null;
       self.$notifier = $notifierElement || self.$notifier;
@@ -54,9 +55,22 @@
       });
     };
 
+    /**
+     * Put message in front of the queue and show it right away
+     */
     UBNotification.prototype.show = function (message) {
+      this.messages.unshift(message);
+      this.isRunning = true;
+      clearTimeout(this.idleTimeout);
+      this.hide();
+    };
+
+    /**
+     * Put message into the end of queue and show according to order
+     */
+    UBNotification.prototype.showQueue = function (message) {
       this.messages.push(message);
-      _run.call(this);
+      this._run();
     };
 
     UBNotification.prototype.hide = function () {
@@ -64,8 +78,8 @@
       var self = this;
       clearTimeout(self.idleTimeout);
       setTimeout(function () {
-        _showNextMessage.call(self);
-      }, 150); // 150 is from CSS transition in `base.css`
+        self._showNextMessage();
+      }, 200);
     };
 
     return new UBNotification();
