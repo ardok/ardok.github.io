@@ -80,6 +80,7 @@
 
 .page-index #settings-modal input[type=checkbox] {
   outline: 0;
+  vertical-align: middle;
 }
 .page-index #settings-modal label {
   vertical-align: middle;
