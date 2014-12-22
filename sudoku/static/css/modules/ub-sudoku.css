@@ -8,8 +8,10 @@
 
 [data-ub-sudoku] input[type=number] {
   border: 0;
-  width: 24px;
-  height: 24px;
+  padding: 0;
+  border-radius: 0;
+  width: 26px;
+  height: 26px;
   text-align: center;
   font-size: 18px;
   background-color: #f6f1ea;
