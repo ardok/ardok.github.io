@@ -61,9 +61,11 @@
   /**
    * possible values of the board
    *
-   * data is from:
+   * first data is from:
    * http://en.wikipedia.org/wiki/File:Sudoku-by-L2G-20050714.svg
    * http://en.wikipedia.org/wiki/File:Sudoku-by-L2G-20050714_solution.svg
+   *
+   * the rests are from: http://www.nikoli.com/en/puzzles/sudoku/
    */
   // TODO use a generator
   var BOARD_VALUE = [
@@ -77,12 +79,83 @@
       [9, 6, 1, 5, 3, 7, 2, 8, 4],
       [2, 8, 7, 4, 1, 9, 6, 3, 5],
       [3, 4, 5, 2, 8, 6, 1, 7, 9]
+    ],
+    // --- easy
+    [
+      [2, 3, 9, 7, 1, 5, 4, 6, 8],
+      [1, 4, 6, 2, 8, 3, 9, 5, 7],
+      [8, 7, 5, 4, 9, 6, 2, 3, 1],
+      [3, 9, 7, 6, 5, 8, 1, 4, 2],
+      [5, 2, 8, 1, 4, 9, 6, 7, 3],
+      [6, 1, 4, 3, 2, 7, 5, 8, 9],
+      [4, 6, 2, 8, 7, 1, 3, 9, 5],
+      [9, 8, 3, 5, 6, 2, 7, 1, 4],
+      [7, 5, 1, 9, 3, 4, 8, 2, 6]
+    ],
+    [
+      [2, 5, 3, 1, 4, 7, 6, 9, 8],
+      [4, 9, 1, 3, 6, 8, 7, 5, 2],
+      [7, 6, 8, 5, 2, 9, 4, 3, 1],
+      [1, 3, 2, 9, 7, 6, 8, 4, 5],
+      [8, 7, 6, 4, 5, 1, 9, 2, 3],
+      [9, 4, 5, 8, 3, 2, 1, 7, 6],
+      [5, 8, 7, 6, 9, 3, 2, 1, 4],
+      [3, 1, 9, 2, 8, 4, 5, 6, 7],
+      [6, 2, 4, 7, 1, 5, 3, 8, 9]
+    ],
+    // --- medium
+    [
+      [9, 7, 4, 3, 6, 8, 1, 5, 2],
+      [3, 5, 8, 1, 2, 7, 6, 9, 4],
+      [6, 1, 2, 5, 9, 4, 7, 8, 3],
+      [5, 6, 7, 4, 8, 1, 3, 2, 9],
+      [8, 2, 1, 7, 3, 9, 4, 6, 5],
+      [4, 9, 3, 2, 5, 6, 8, 7, 1],
+      [1, 8, 9, 6, 4, 5, 2, 3, 7],
+      [2, 4, 6, 9, 7, 3, 5, 1, 8],
+      [7, 3, 5, 8, 1, 2, 9, 4, 6]
+    ],
+    [
+      [4, 8, 9, 6, 5, 3, 2, 1, 7],
+      [1, 2, 3, 4, 7, 9, 5, 8, 6],
+      [5, 6, 7, 8, 2, 1, 9, 4, 3],
+      [9, 1, 2, 3, 6, 8, 4, 7, 5],
+      [8, 5, 6, 2, 4, 7, 3, 9, 1],
+      [7, 3, 4, 9, 1, 5, 6, 2, 8],
+      [6, 7, 1, 5, 9, 2, 8, 3, 4],
+      [2, 4, 8, 1, 3, 6, 7, 5, 9],
+      [3, 9, 5, 7, 8, 4, 1, 6, 2]
+    ],
+    // --- hard
+    [
+      [6, 4, 1, 7, 3, 9, 8, 2, 5],
+      [7, 5, 2, 8, 1, 6, 9, 4, 3],
+      [8, 3, 9, 2, 5, 4, 6, 1, 7],
+      [1, 6, 7, 3, 9, 5, 4, 8, 2],
+      [4, 8, 5, 1, 6, 2, 7, 3, 9],
+      [9, 2, 3, 4, 7, 8, 5, 6, 1],
+      [3, 1, 6, 9, 4, 7, 2, 5, 8],
+      [5, 7, 8, 6, 2, 1, 3, 9, 4],
+      [2, 9, 4, 5, 8, 3, 1, 7, 6]
+    ],
+    [
+      [4, 3, 8, 1, 7, 2, 6, 9, 5],
+      [6, 1, 7, 9, 5, 4, 3, 8, 2],
+      [2, 9, 5, 8, 3, 6, 4, 7, 1],
+      [1, 7, 3, 6, 4, 9, 2, 5, 8],
+      [5, 6, 9, 7, 2, 8, 1, 3, 4],
+      [8, 2, 4, 5, 1, 3, 9, 6, 7],
+      [9, 8, 2, 4, 6, 5, 7, 1, 3],
+      [3, 5, 1, 2, 9, 7, 8, 4, 6],
+      [7, 4, 6, 3, 8, 1, 5, 2, 9]
     ]
-    // feel free to add more board here
+    // feel free to add more board here, and don't forget to add the visibility at the same index
+    // into `BOARD_SHOW`
   ];
 
   /**
    * 0 is hidden, 1 is shown
+   * The index matches with `BOARD_VALUE`
    */
   // TODO use a generator
   var BOARD_SHOW = [
@@ -96,18 +169,104 @@
       [0, 1, 0, 0, 0, 0, 1, 1, 0],
       [0, 0, 0, 1, 1, 1, 0, 0, 1],
       [0, 0, 0, 0, 1, 0, 0, 1, 1]
+    ],
+    [
+      [1, 1, 0, 0, 0, 0, 0, 1, 1],
+      [1, 0, 0, 0, 0, 0, 0, 1, 1],
+      [0, 0, 1, 1, 0, 1, 0, 0, 0],
+      [0, 0, 1, 1, 0, 1, 1, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 1, 1, 0, 1, 1, 0, 0],
+      [0, 0, 0, 1, 0, 1, 1, 0, 0],
+      [1, 1, 0, 0, 0, 0, 0, 0, 1],
+      [1, 1, 0, 0, 0, 0, 0, 1, 1]
+    ],
+    [
+      [0, 1, 1, 1, 0, 0, 0, 1, 0],
+      [1, 0, 0, 0, 1, 0, 0, 1, 1],
+      [1, 0, 0, 0, 1, 0, 0, 0, 0],
+      [1, 0, 0, 0, 1, 0, 0, 0, 0],
+      [0, 1, 1, 1, 0, 1, 1, 1, 0],
+      [0, 0, 0, 0, 1, 0, 0, 0, 1],
+      [0, 0, 0, 0, 1, 0, 0, 0, 0],
+      [1, 1, 0, 0, 1, 0, 0, 0, 1],
+      [0, 1, 0, 0, 0, 1, 1, 1, 0]
+    ],
+    [
+      [1, 0, 0, 0, 0, 1, 1, 0, 0],
+      [0, 0, 0, 1, 1, 0, 0, 1, 0],
+      [0, 0, 1, 0, 0, 0, 1, 0, 1],
+      [0, 0, 1, 0, 0, 1, 0, 0, 1],
+      [0, 1, 0, 0, 1, 0, 0, 1, 0],
+      [1, 0, 0, 1, 0, 0, 1, 0, 0],
+      [1, 0, 1, 0, 0, 0, 1, 0, 0],
+      [0, 1, 0, 0, 1, 1, 0, 0, 0],
+      [0, 0, 1, 1, 0, 0, 0, 0, 1]
+    ],
+    [
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [1, 1, 1, 1, 0, 0, 0, 0, 0],
+      [1, 1, 1, 1, 0, 0, 0, 0, 0],
+      [1, 1, 1, 1, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 1, 1, 1, 1],
+      [0, 0, 0, 0, 0, 1, 1, 1, 1],
+      [0, 0, 0, 0, 0, 1, 1, 1, 1],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ],
+    [
+      [0, 0, 1, 0, 0, 0, 1, 0, 0],
+      [0, 1, 0, 0, 1, 0, 0, 1, 0],
+      [0, 0, 0, 1, 0, 0, 0, 0, 1],
+      [0, 0, 1, 0, 0, 1, 0, 1, 0],
+      [1, 0, 0, 0, 1, 0, 0, 0, 1],
+      [0, 1, 0, 1, 0, 0, 1, 0, 0],
+      [1, 0, 0, 0, 0, 1, 0, 0, 0],
+      [0, 1, 0, 0, 1, 0, 0, 1, 0],
+      [0, 0, 1, 0, 0, 0, 1, 0, 0]
+    ],
+    [
+      [0, 0, 0, 0, 1, 0, 1, 0, 1],
+      [0, 0, 0, 0, 0, 1, 0, 1, 0],
+      [1, 0, 0, 0, 0, 1, 0, 1, 0],
+      [0, 1, 1, 0, 0, 0, 1, 0, 0],
+      [1, 0, 0, 0, 0, 0, 0, 0, 1],
+      [0, 0, 1, 0, 0, 0, 1, 1, 0],
+      [0, 1, 0, 1, 0, 0, 0, 0, 1],
+      [0, 1, 0, 1, 0, 0, 0, 0, 0],
+      [1, 0, 1, 0, 1, 0, 0, 0, 0]
     ]
   ];
 
-
-
   /**
-   * Return a random number from 1 - 9 (inclusive)
+   * We don't want to show the board that has been played in the past 3 games.
+   * Just for more variation...
+   * Again, TODO would be nice to have a board generator
    */
-  function rand9() {
-    // the Math.floor(...) will generate 0 - 8
-    // add `1` so that it will become 1 - 9
-    return Math.floor(Math.random() * 9) + 1;
+  var boardsPlayed = [];
+  function randBoardIndex() {
+    if (BOARD_VALUE.length !== BOARD_SHOW.length) {
+      return -1;
+    }
+    var getRandomBoardIndex = function () {
+      return Math.floor(Math.random() * BOARD_VALUE.length);
+    };
+    var index = getRandomBoardIndex();
+    var tries = 0;
+    while (boardsPlayed.indexOf(index) > -1) {
+      index = getRandomBoardIndex();
+      tries = tries + 1;
+      if (tries >= 20) {
+        // just try 20 times...
+        break;
+      }
+    }
+    if (boardsPlayed.length >= 3) {
+      boardsPlayed.pop(); // remove the latest one
+    }
+    boardsPlayed.unshift(index); // prepend the value to the front
+    console.log(index);
+    return index;
   }
 
   /**
@@ -125,10 +284,8 @@
     this.options = options;
 
     // data to use
-    // TODO use a generator
-    var index = options.ubBoardIndex || 0;
-    this.BOARD_VALUE = BOARD_VALUE[index];
-    this.BOARD_SHOW = BOARD_SHOW[index];
+    this.BOARD_VALUE = null;
+    this.BOARD_SHOW = null;
 
     // hard code the total cell num to be 9x9
     this.rowTotalNum = 9;
@@ -159,8 +316,6 @@
         this.$elem.data('ub.sudoku')) {
       return;
     }
-
-    var self = this;
 
     // create the tables
     // TODO this could use templating engine
@@ -309,16 +464,20 @@
 
     // TODO this will be our generator
     // unfortunately, because I'm lame, we will just use hard-coded value for now
+    var index = randBoardIndex();
+    this.BOARD_VALUE = BOARD_VALUE[index];
+    this.BOARD_SHOW = BOARD_SHOW[index];
 
     var self = this;
     // put the values in
     this.$elem.find('input').each(function () {
       var $this = $(this);
+
       var row = parseInt($this.attr('data-row'));
       var col = parseInt($this.attr('data-col'));
 
-      if (self.BOARD_SHOW[row][col] === 0) {
-        $this.val(self.BOARD_VALUE[row][col]).addClass('in');
+      if (self.BOARD_SHOW[row][col] === 1) {
+        $this.val(self.BOARD_VALUE[row][col]).addClass('in').attr('disabled', 'disabled');
       } else {
         $this.removeAttr('disabled');
       }

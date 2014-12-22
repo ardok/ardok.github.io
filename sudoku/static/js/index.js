@@ -23,6 +23,7 @@ $(function () {
     
     $validateBtn.show().removeAttr('disabled');
     $cheatFillBtn.removeAttr('disabled');
+    $saveBtn.removeAttr('disabled');
 
     if (window.localStorage) {
       $saveBtn.show();
@@ -40,6 +41,7 @@ $(function () {
     // deal with buttons
     $validateBtn.attr('disabled', 'disabled');
     $cheatFillBtn.attr('disabled', 'disabled');
+    $saveBtn.attr('disabled', 'disabled');
 
     // We would like to show our success gif when sudoku game is over with a success!
     // The thing with loading a gif is that it might take some time if your internet is slow.
