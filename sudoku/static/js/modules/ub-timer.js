@@ -6,9 +6,9 @@
 
     this.timerInterval = null;
     this.isRunning = false;
-    this.hour = 0;
-    this.minute = 0;
-    this.second = 0;
+    this.hour = parseInt(options.ubHour) || 0;
+    this.minute = parseInt(options.ubMinute) || 0;
+    this.second = parseInt(options.ubSecond) || 0;
 
     this.$hour = this.$elem.find('[data-ub-timer=hour]');
     this.$minute = this.$elem.find('[data-ub-timer=minute]');
@@ -25,7 +25,7 @@
     }
 
     this.$elem.data('inited', true);
-    this.reset();
+    this._setTimerText();
   };
 
   UBTimer.prototype.start = function () {
@@ -62,27 +62,14 @@
 
   UBTimer.prototype.process = function () {
     this.second = this.second + 1;
-
     this.processTime(this.second);
+    this._setTimerText();
+  };
 
-    if (this.hour === 0) {
-      this.$hour.text('00');
-    } else {
-      this.$hour.text(('0' + this.hour).slice(-2));
-    }
-
-    if (this.minute === 0) {
-      this.$minute.text('00');
-    } else {
-      this.$minute.text(('0' + this.minute).slice(-2));
-    }
-
-    if (this.second === 0) {
-      this.$second.text('00');
-    } else {
-      this.$second.text(('0' + this.second).slice(-2));
-    }
-
+  UBTimer.prototype._setTimerText = function () {
+    this.$hour.text(('0' + this.hour).slice(-2));
+    this.$minute.text(('0' + this.minute).slice(-2));
+    this.$second.text(('0' + this.second).slice(-2));
   };
 
   /**
@@ -107,6 +94,46 @@
     this.hour = hour;
   };
 
+  UBTimer.prototype.saveState = function () {
+    if (!window.localStorage) {
+      return;
+    }
+
+    var timeData = {
+      hour: this.hour,
+      minute: this.minute,
+      second: this.second
+    };
+    window.localStorage.setItem('uber.timer.' + this.$elem.attr('id'), JSON.stringify(timeData));
+  };
+
+  UBTimer.prototype.loadState = function () {
+    if (!window.localStorage) {
+      return;
+    }
+
+    var timeData = window.localStorage.getItem('uber.timer.' + this.$elem.attr('id'));
+    if (timeData) {
+      try {
+        var parsed = JSON.parse(timeData);
+        this.hour = parseInt(parsed.hour);
+        this.minute = parseInt(parsed.minute);
+        this.second = parseInt(parsed.second);
+        this._setTimerText();
+      } catch (e) {
+        // do nothing
+      }
+    }
+  };
+
+  UBTimer.prototype.clearState = function () {
+    if (!window.localStorage) {
+      return;
+    }
+
+    window.localStorage.removeItem('uber.timer.' + this.$elem.attr('id'));
+  };
+
   var old = $.fn.ubTimer;
 
   $.fn.ubTimer = function (opt) {
@@ -115,21 +142,32 @@
       var data = $this.data('ub.timer');
       var options = $.extend({}, UBTimer.DEFAULTS, $this.data(), typeof opt === 'object' && opt);
 
-      if (!data) {
+      if (!data || (data && typeof opt === 'object')) {
         $this.data('ub.timer', (data = new UBTimer(this, options)));
       }
 
       if (typeof opt === 'string' && typeof data[opt] === 'function') {
         data[opt]();
-      } else {
-        data._init();
       }
     });
   };
+
+
+  // NO CONFLICT
+  // ===========
 
   $.fn.ubTimer.noConflict = function () {
     $.fn.ubTimer = old;
     return this;
   };
+
+
+  // DATA-API EVENT LISTENERS
+  // ========================
+
+  $(document).on('click.ub.timer.trigger', '[data-ub-timer-trigger]', function () {
+    var $this = $(this);
+    $($this.attr('data-ub-timer-target')).ubTimer($this.attr('data-ub-timer-trigger'));
+  });
 
 })(jQuery);

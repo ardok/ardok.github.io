@@ -13,7 +13,7 @@ body {
   text-align: center;
   border-radius: 3px;
   font-weight: 400;
-  font-size: 17px;
+  font-size: 12px;
   padding: 20px 30px 20px 30px;
   text-decoration: none;
   outline: none;
@@ -45,6 +45,13 @@ body {
   left: 50%;
   margin-left: -37px;
 }
+
+@media all and (min-width: 768px) {
+  .btn {
+    font-size: 17px;
+  }
+}
+
 @-webkit-keyframes spinnerRotate {
   0.00% {
     transform: scale(0.5) rotate(0deg);

@@ -14,7 +14,8 @@
 <!-- endblock -->
 
 <!-- TODO: combine and minify this block (output: index.min.css) -->
-<link rel="stylesheet" href="static/css/ub-sudoku.css">
+<link rel="stylesheet" href="static/css/modules/ub-sudoku.css">
+<link rel="stylesheet" href="static/css/modules/ub-modal.css">
 <link rel="stylesheet" href="static/css/index.css">
 <!-- endblock -->
 
@@ -26,29 +27,32 @@
 <div class="table-wrapper">
   <div class="timer"
        id="sudoku-timer">
-    <span data-ub-timer="hour"></span> :
-    <span data-ub-timer="minute"></span> :
-    <span data-ub-timer="second"></span>
+    <span data-ub-timer="hour">00</span> :
+    <span data-ub-timer="minute">00</span> :
+    <span data-ub-timer="second">00</span>
   </div>
   <div class="toolbar top">
     <button class="btn start-btn"
             data-ub-sudoku-trigger="reset"
-            data-ub-target="#sudoku-table">
+            data-ub-sudoku-target="#sudoku-table">
       Start
     </button>
     <button class="btn validate-btn"
             data-ub-sudoku-trigger="validate"
-            data-ub-target="#sudoku-table">
+            data-ub-sudoku-target="#sudoku-table">
       Validate
     </button>
     <button class="btn save-btn"
-            data-ub-target="#sudoku-table">
+            data-ub-sudoku-trigger="saveState"
+            data-ub-sudoku-target="#sudoku-table"
+            data-ub-timer-trigger="saveState"
+            data-ub-timer-target="#sudoku-timer">
       Save
     </button>
     <button class="btn cheat-fill-btn"
             disabled="disabled"
             data-ub-sudoku-trigger="cheatFill"
-            data-ub-target="#sudoku-table">
+            data-ub-sudoku-target="#sudoku-table">
       Cheat Fill
     </button>
     <div class="success-gif-container">
@@ -57,8 +61,29 @@
     </div>
   </div>
   <table id="sudoku-table"
-         data-ub-sudoku>
+         data-ub-sudoku
+         data-ub-sudoku-timer="#sudoku-timer">
   </table>
+</div>
+
+<div class="ub-modal no-footer ub-modal-center" id="load-state-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="ub-modal-close" data-ub-dismiss="modal">
+        &times;
+      </div>
+      <div class="modal-title">
+        Load from state?
+      </div>
+      <div class="modal-body">
+        Saved state detected, would you liked to load from last saved state?
+      </div>
+      <div class="modal-footer">
+        <a data-ub-dismiss="modal">NO</a>
+        <a class="load-state-ok-btn">OK</a>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- TODO: combine and minify this block (output: all.min.js) -->
@@ -69,6 +94,7 @@
 <script type="text/javascript" src="static/js/modules/ub-lazy-src.js"></script>
 <script type="text/javascript" src="static/js/modules/ub-timer.js"></script>
 <script type="text/javascript" src="static/js/modules/ub-sudoku.js"></script>
+<script type="text/javascript" src="static/js/modules/ub-modal.js"></script>
 <script type="text/javascript" src="static/js/index.js"></script>
 <!-- endblock -->
 

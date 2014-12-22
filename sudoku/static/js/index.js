@@ -2,6 +2,7 @@ $(function () {
   var $cheatFillBtn = $('.cheat-fill-btn');
   var $startBtn = $('.start-btn');
   var $validateBtn = $('.validate-btn');
+  var $saveBtn = $('.save-btn');
 
   var $sudokuTable = $('#sudoku-table');
   var $sudokuTimer = $('#sudoku-timer');
@@ -15,7 +16,6 @@ $(function () {
     $cheatFillBtn.show();
   }
 
-  $sudokuTimer.ubTimer();
   var sudokuStartFunc = function (evt) {
     // start timer, show / hide buttons
     $sudokuTimer.ubTimer('start');
@@ -23,6 +23,10 @@ $(function () {
     
     $validateBtn.show().removeAttr('disabled');
     $cheatFillBtn.removeAttr('disabled');
+
+    if (window.localStorage) {
+      $saveBtn.show();
+    }
 
     // hide the success gif
     $gifContainer.removeClass('show');
@@ -63,4 +67,33 @@ $(function () {
     .on('ub.sudoku.done', sudokuDoneFunc)
     .on('ub.sudoku.reset', sudokuResetFunc);
 
+  // check whether there is data that we want in local storage
+  // if there is, ask user whether user wants to load the last state
+  // after loading, delete the state from local storage
+  // we will also delete the state from local storage if user click no
+  if (window.localStorage) {
+    var $loadStateModal = $('#load-state-modal');
+
+    var tableData = window.localStorage.getItem('uber.sudoku.tableData');
+    var timerData = window.localStorage.getItem('uber.timer.sudoku-timer');
+    if (tableData) {
+      // open modal
+      $loadStateModal.ubModal('open');
+
+      $loadStateModal.find('.load-state-ok-btn').on('click', function () {
+        $loadStateModal.ubModal('close');
+        $sudokuTable.ubSudoku('loadState').trigger('ub.sudoku.start');
+        if (timerData) {
+          $sudokuTimer.ubTimer('loadState');
+        }
+      });
+
+      $loadStateModal.on('hidden.ub.modal').on('click', function () {
+        $sudokuTable.ubSudoku('clearState');
+        $sudokuTimer.ubTimer('clearState');
+      });
+    }
+  } else {
+    $sudokuTimer.ubTimer();
+  }
 });

@@ -189,6 +189,9 @@
 
   };
 
+  /**
+   * Reset the state of the table
+   */
   UBSudoku.prototype.reset = function () {
     this.$elem.find('input').each(function () {
       $(this).val('').removeClass('error').removeClass('success').removeClass('in');
@@ -203,6 +206,96 @@
     this.$elem.trigger('ub.sudoku.reset');
   };
 
+  /**
+   * Save the state of the sudoku table into local storage, if available
+   */
+  UBSudoku.prototype.saveState = function () {
+    if (!window.localStorage) {
+      return;
+    }
+
+    // store table data
+    // format: either string of a number or (string of a number & string)
+    // [
+    //   [1, 2, 3, 4, 5, 6f, 7f, 8, 9],
+    //   [...], ...
+    // ]
+    //
+    // the ones with `f` are the "fixed" ones, i.e. already shown on the table (pre-filled)
+    // the ones without `f` are the ones that user filled in
+    var tableMetadata = {
+      row: this.rowTotalNum,
+      col: this.colTotalNum,
+      data: []
+    };
+    var tableValues = [];
+    for (var i = 0; i < this.rowTotalNum; i++) {
+      tableValues[i] = new Array(this.colTotalNum);
+    }
+    this.$elem.find('input').each(function () {
+      var $this = $(this);
+      var row = parseInt($this.attr('data-row'));
+      var col = parseInt($this.attr('data-col'));
+      if ($this.attr('disabled')) {
+        // remember that `val()` will return string
+        tableValues[row][col] = $this.val() + 'f';
+      } else {
+        tableValues[row][col] = $this.val();
+      }
+    });
+    tableMetadata['data'] = tableValues;
+    window.localStorage.setItem('uber.sudoku.tableData', JSON.stringify(tableMetadata));
+  };
+
+  /**
+   * Method to load table state from local storage
+   */
+  UBSudoku.prototype.loadState = function () {
+    if (!window.localStorage) {
+      return;
+    }
+
+    var parsed = null;
+    var i = 0;
+    var j = 0;
+
+    var tableData = window.localStorage.getItem('uber.sudoku.tableData');
+    if (tableData) {
+      try {
+        parsed = JSON.parse(tableData);
+        var tableValues = parsed.data;
+        for (i = 0; i < parsed.row; i++) {
+          for (j = 0; j < parsed.col; j++) {
+            var value = tableValues[i][j];
+            if (value !== '') {
+              var $targetInput = $('input[data-row=' + i + '][data-col=' + j + ']');
+              $targetInput.val(parseInt(value));
+              if (value.length === 2 && value.indexOf('f') === 1) {
+                // contains `f`
+                $targetInput.attr('disabled', 'disabled');
+              } else {
+                $targetInput.removeAttr('disabled');
+              }
+            }
+          }
+        }
+        this.validate();
+      } catch (e) {
+        // do nothing
+      }
+    }
+  };
+
+  UBSudoku.prototype.clearState = function () {
+    if (!window.localStorage) {
+      return;
+    }
+    window.localStorage.removeItem('uber.sudoku.tableData');
+  };
+
+  /**
+   * Method to generate data onto the sudoku table
+   */
   UBSudoku.prototype.generateData = function () {
     if (this.isGenerating) {
       return;
@@ -500,8 +593,7 @@
     if ($this.attr('disabled')) {
       return;
     }
-    var $target = $($this.data('ubTarget'));
-    $target.ubSudoku($this.attr('data-ub-sudoku-trigger'));
+    $($this.data('ubSudokuTarget')).ubSudoku($this.attr('data-ub-sudoku-trigger'));
   });
 
 })(jQuery);

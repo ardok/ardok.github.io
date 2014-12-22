@@ -1,0 +1,116 @@
+.ub-modal-open {
+  overflow: hidden;
+}
+.ub-modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2040; /* navigation header is 2000 */
+  background-color: #000;
+  opacity: 0.5;
+}
+.ub-modal {
+  display: none;
+  overflow: auto;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2050; /* above modal backdrop */
+  -webkit-overflow-scrolling: touch;
+  outline: 0;
+}
+.ub-modal .ub-modal-close {
+  position: absolute;
+  right: 20px;
+  top: 7px;
+  font-size: 28px;
+  color: #c4bdb2;
+  cursor: pointer;
+}
+.ub-modal .ub-modal-close:hover {
+  color: #000000;
+  opacity: 0.5;
+}
+.ub-modal .modal-title {
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1.2em;
+  padding: 20px 20px 0 20px;
+}
+.ub-modal .modal-dialog {
+  position: relative;
+  width: auto;
+  margin: 10px;
+}
+.ub-modal .modal-content {
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #999;
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 6px;
+  -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
+  box-shadow: 0 3px 9px rgba(0,0,0,.5);
+  background-clip: padding-box;
+  outline: 0;
+}
+.ub-modal .modal-body {
+  position: relative;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 400;
+}
+.ub-modal .modal-footer {
+  padding: 10px 10px 20px 20px;
+  text-align: right;
+}
+.ub-modal .modal-footer > a:not(:last-child) {
+  margin-right: 30px;
+}
+.ub-modal .modal-footer > a {
+  color: #607d8b;
+  cursor: pointer;
+  padding: 10px;
+  text-transform: uppercase;
+  -webkit-transition: color 200ms;
+  transition: color 200ms;
+}
+.ub-modal .modal-footer > a:hover {
+  color: #455a64;
+}
+
+@media all and (min-width: 768px) {
+  .ub-modal .modal-dialog {
+    width: 620px;
+    margin: 30px auto;
+  }
+  .ub-modal .ub-modal-close {
+    right: 35px;
+    top: 16px;
+  }
+  .ub-modal .modal-title {
+    font-size: 32px;
+    text-align: left;
+    padding: 20px 35px 0 35px;
+  }
+  .ub-modal .modal-body {
+    padding: 20px 35px;
+    font-size: 16px;
+  }
+  .ub-modal .modal-footer {
+    padding: 20px 25px;
+  }
+  .ub-modal .modal-content {
+    -webkit-box-shadow: 0 5px 15px rgba(0,0,0,.5);
+    box-shadow: 0 5px 15px rgba(0,0,0,.5);
+  }
+}
+
+@media all and (max-height: 420px) {
+  .ub-modal.ub-modal-center {
+    padding-top: 0 !important;
+  }
+}
