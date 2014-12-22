@@ -10,6 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
 <!-- TODO: combine and minify this block (output: all.min.css) -->
+<link rel="stylesheet" href="static/css/lib/font-awesome.min.css">
 <link rel="stylesheet" href="static/css/base.css">
 <!-- endblock -->
 
@@ -22,6 +23,13 @@
 <title>Sudoku</title>
 </head>
 <body class="page-index">
+
+<div class="fixed-toolbar">
+  <i class="fa fa-cog"
+     data-ub-toggle="modal"
+     data-ub-modal-target="#settings-modal"></i>
+</div>
+
 <h1 class="title">Uber Sudoku</h1>
 
 <div class="table-wrapper">
@@ -81,6 +89,33 @@
       <div class="modal-footer">
         <a data-ub-dismiss="modal">NO</a>
         <a class="load-state-ok-btn">YES</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ub-modal no-footer ub-modal-center" id="settings-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="ub-modal-close" data-ub-dismiss="modal">
+        &times;
+      </div>
+      <div class="modal-title">
+        Settings
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <input type="checkbox"
+                 id="settings-input-change"
+                 data-ub-sudoku-trigger="toggleValidationMethod"
+                 data-ub-sudoku-target="#sudoku-table">
+          <label for="settings-input-change" class="no-select">
+            Automatically do validation as you type
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a data-ub-dismiss="modal">DONE</a>
       </div>
     </div>
   </div>

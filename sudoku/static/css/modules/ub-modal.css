@@ -30,9 +30,11 @@
   font-size: 28px;
   color: #c4bdb2;
   cursor: pointer;
+  -webkit-transition: color 200ms;
+  transition: color 200ms;
 }
 .ub-modal .ub-modal-close:hover {
-  color: #000000;
+  color: #607d8b;
   opacity: 0.5;
 }
 .ub-modal .modal-title {

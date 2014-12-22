@@ -295,6 +295,7 @@
     this.errorTableIndexes = [];
 
     this.isGenerating = false;
+    this.isValidatingOnType = false;
 
     // automatically initialize the sudoku board
     this._init();
@@ -342,7 +343,32 @@
         });
       });
     });
+  };
 
+  /**
+   * Method to toggle the validation method, as you type or not
+   */
+  UBSudoku.prototype.toggleValidationMethod = function () {
+    this.isValidatingOnType = !this.isValidatingOnType;
+    this._setInputsValidationMethod();
+  };
+
+  UBSudoku.prototype._setInputsValidationMethod = function () {
+    if (this.isValidatingOnType) {
+
+      var self = this;
+      this.$elem.find('input').on('keyup.ub.sudoku.validating', function () {
+        var $this = $(this);
+        var row = parseInt($this.attr('data-row'));
+        var col = parseInt($this.attr('data-col'));
+        self.validate();
+      });
+
+    } else {
+
+      this.$elem.find('input').off('keyup.ub.sudoku.validating')
+
+    }
   };
 
   /**
@@ -382,6 +408,7 @@
     var tableMetadata = {
       row: this.rowTotalNum,
       col: this.colTotalNum,
+      isValidatingOnType: this.isValidatingOnType,
       data: []
     };
     var tableValues = [];
@@ -400,7 +427,7 @@
       }
     });
     tableMetadata['data'] = tableValues;
-    window.localStorage.setItem('ub.sudoku.tableData', JSON.stringify(tableMetadata));
+    window.localStorage.setItem('ub.sudoku.' + this.$elem.attr('id'), JSON.stringify(tableMetadata));
     this.$elem.trigger('ub.sudoku.state.saved');
   };
 
@@ -416,7 +443,7 @@
     var i = 0;
     var j = 0;
 
-    var tableData = window.localStorage.getItem('ub.sudoku.tableData');
+    var tableData = window.localStorage.getItem('ub.sudoku.' + this.$elem.attr('id'));
     if (tableData) {
       try {
         parsed = JSON.parse(tableData);
@@ -424,18 +451,23 @@
         for (i = 0; i < parsed.row; i++) {
           for (j = 0; j < parsed.col; j++) {
             var value = tableValues[i][j];
+            var $targetInput = $('input[data-row=' + i + '][data-col=' + j + ']');
+            $targetInput.removeAttr('disabled');
             if (value !== '') {
-              var $targetInput = $('input[data-row=' + i + '][data-col=' + j + ']');
               $targetInput.val(parseInt(value));
               if (value.length === 2 && value.indexOf('f') === 1) {
                 // contains `f`
                 $targetInput.attr('disabled', 'disabled');
-              } else {
-                $targetInput.removeAttr('disabled');
               }
             }
           }
         }
+
+        // set validation method
+        this.isValidatingOnType = parsed.isValidatingOnType;
+        this._setInputsValidationMethod();
+        $('[data-ub-sudoku-trigger=toggleValidationMethod]').prop('checked', this.isValidatingOnType);
+
         this.validate();
         this.$elem.trigger('ub.sudoku.state.loaded');
       } catch (e) {
@@ -448,7 +480,7 @@
     if (!window.localStorage) {
       return;
     }
-    window.localStorage.removeItem('ub.sudoku.tableData');
+    window.localStorage.removeItem('ub.sudoku.' + this.$elem.attr('id'));
   };
 
   /**

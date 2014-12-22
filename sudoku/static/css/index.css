@@ -1,3 +1,24 @@
+.page-index .fixed-toolbar {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  bottom: auto;
+  left: auto;
+}
+.page-index .fixed-toolbar > i {
+  cursor: pointer;
+  color: #90a4ae;
+  opacity: 0.8;
+  font-size: 18px;
+  padding: 3px 5px;
+  -webkit-transition: color 200ms, opacity 200ms;
+  transition: color 200ms, opacity 200ms;
+}
+.page-index .fixed-toolbar > i:hover {
+  color: #607d8b;
+  opacity: 1;
+}
+
 .page-index .title {
   text-align: center;
 }
@@ -55,6 +76,13 @@
 .page-index .success-gif.show {
   -webkit-animation: gifShow 300ms both;
   animation: gifShow 300ms both;
+}
+
+.page-index #settings-modal input[type=checkbox] {
+  outline: 0;
+}
+.page-index #settings-modal label {
+  vertical-align: middle;
 }
 
 @media all and (min-width: 768px) {

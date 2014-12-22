@@ -76,7 +76,7 @@ $(function () {
   if (window.localStorage) {
     var $loadStateModal = $('#load-state-modal');
 
-    var tableData = window.localStorage.getItem('ub.sudoku.tableData');
+    var tableData = window.localStorage.getItem('ub.sudoku.sudoku-table');
     var timerData = window.localStorage.getItem('ub.timer.sudoku-timer');
     if (tableData) {
       // open modal
@@ -94,6 +94,7 @@ $(function () {
         $sudokuTable.ubSudoku('clearState');
         $sudokuTimer.ubTimer('clearState');
       });
+
     }
 
     $sudokuTable.on('ub.sudoku.state.saved', function () {
