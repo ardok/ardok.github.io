@@ -392,7 +392,7 @@
    * Save the state of the sudoku table into local storage, if available
    */
   UBSudoku.prototype.saveState = function () {
-    if (!window.localStorage) {
+    if (!Modernizr.localstorage) {
       return;
     }
 
@@ -435,7 +435,7 @@
    * Method to load table state from local storage
    */
   UBSudoku.prototype.loadState = function () {
-    if (!window.localStorage) {
+    if (!Modernizr.localstorage) {
       return;
     }
 
@@ -477,7 +477,7 @@
   };
 
   UBSudoku.prototype.clearState = function () {
-    if (!window.localStorage) {
+    if (!Modernizr.localstorage) {
       return;
     }
     window.localStorage.removeItem('ub.sudoku.' + this.$elem.attr('id'));

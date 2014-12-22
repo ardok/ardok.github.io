@@ -4,8 +4,8 @@ $(function () {
   var $validateBtn = $('.validate-btn');
   var $saveBtn = $('.save-btn');
 
-  var $sudokuTable = $('#sudoku-table');
-  var $sudokuTimer = $('#sudoku-timer');
+  var $sudokuTable = $('#sudoku-table-1');
+  var $sudokuTimer = $('#sudoku-timer-1');
   var $tableWrapper = $sudokuTable.parents('.table-wrapper');
   var $gifContainer = $tableWrapper.find('.success-gif-container');
   var $gif = $gifContainer.find('.success-gif');
@@ -73,11 +73,11 @@ $(function () {
   // if there is, ask user whether user wants to load the last state
   // after loading, delete the state from local storage
   // we will also delete the state from local storage if user click no
-  if (window.localStorage) {
+  if (Modernizr.localstorage) {
     var $loadStateModal = $('#load-state-modal');
 
-    var tableData = window.localStorage.getItem('ub.sudoku.sudoku-table');
-    var timerData = window.localStorage.getItem('ub.timer.sudoku-timer');
+    var tableData = window.localStorage.getItem('ub.sudoku.sudoku-table-1');
+    var timerData = window.localStorage.getItem('ub.timer.sudoku-timer-1');
     if (tableData) {
       // open modal
       $loadStateModal.ubModal('open');

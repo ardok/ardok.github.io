@@ -36,7 +36,7 @@
 
 <div class="table-wrapper">
   <div class="timer"
-       id="sudoku-timer">
+       id="sudoku-timer-1">
     <span data-ub-timer="hour">00</span> :
     <span data-ub-timer="minute">00</span> :
     <span data-ub-timer="second">00</span>
@@ -45,25 +45,25 @@
     <!-- could use SCSS so that we could just put no-select style into btn -->
     <button class="btn start-btn no-select"
             data-ub-sudoku-trigger="reset"
-            data-ub-sudoku-target="#sudoku-table">
+            data-ub-sudoku-target="#sudoku-table-1">
       Start
     </button>
     <button class="btn validate-btn no-select"
             data-ub-sudoku-trigger="validate"
-            data-ub-sudoku-target="#sudoku-table">
+            data-ub-sudoku-target="#sudoku-table-1">
       Validate
     </button>
     <button class="btn save-btn no-select"
             data-ub-sudoku-trigger="saveState"
-            data-ub-sudoku-target="#sudoku-table"
+            data-ub-sudoku-target="#sudoku-table-1"
             data-ub-timer-trigger="saveState"
-            data-ub-timer-target="#sudoku-timer">
+            data-ub-timer-target="#sudoku-timer-1">
       Save
     </button>
     <button class="btn cheat-fill-btn no-select"
             disabled="disabled"
             data-ub-sudoku-trigger="cheatFill"
-            data-ub-sudoku-target="#sudoku-table">
+            data-ub-sudoku-target="#sudoku-table-1">
       Cheat Fill
     </button>
     <div class="success-gif-container">
@@ -71,9 +71,9 @@
       <img class="success-gif" alt="Success Minion Gif" data-ub-lazy-src="static/img/success.gif">
     </div>
   </div>
-  <table id="sudoku-table"
+  <table id="sudoku-table-1"
          data-ub-sudoku
-         data-ub-sudoku-timer="#sudoku-timer">
+         data-ub-sudoku-timer="#sudoku-timer-1">
   </table>
 </div>
 
@@ -112,7 +112,7 @@
                  class="no-select"
                  id="settings-input-change"
                  data-ub-sudoku-trigger="toggleValidationMethod"
-                 data-ub-sudoku-target="#sudoku-table">
+                 data-ub-sudoku-target="#sudoku-table-1">
           <label for="settings-input-change" class="no-select">
             Automatically do validation as you type
           </label>

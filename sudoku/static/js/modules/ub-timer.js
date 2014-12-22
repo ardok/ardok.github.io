@@ -100,8 +100,11 @@
     this.hour = hour;
   };
 
+  /**
+   * Save the state into local storage
+   */
   UBTimer.prototype.saveState = function () {
-    if (!window.localStorage) {
+    if (!Modernizr.localstorage) {
       return;
     }
 
@@ -114,8 +117,11 @@
     this.$elem.trigger('ub.timer.state.saved');
   };
 
+  /**
+   * Load the state from local storage
+   */
   UBTimer.prototype.loadState = function () {
-    if (!window.localStorage) {
+    if (!Modernizr.localstorage) {
       return;
     }
 
@@ -134,8 +140,11 @@
     }
   };
 
+  /**
+   * Clear the data from local storage
+   */
   UBTimer.prototype.clearState = function () {
-    if (!window.localStorage) {
+    if (!Modernizr.localstorage) {
       return;
     }
     window.localStorage.removeItem('ub.timer.' + this.$elem.attr('id'));
