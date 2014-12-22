@@ -111,11 +111,13 @@
   }
 
   /**
-   * UBSudoku event triggers:
+   * UBSudoku event triggers on the element:
    * `ub.sudoku.reset` -> When the game resets.
    * `ub.sudoku.start` -> When the game is done generating data into the table.
    * `ub.sudoku.done` -> When the validate method finally figures that the table is done!
    *                     Filled with the correct numbers.
+   * `ub.sudoku.state.saved` -> When state successfully saved into local storage
+   * `ub.sudoku.state.loaded` -> When state successfully loaded from local storage
    */
 
   function UBSudoku(elem, options) {
@@ -244,7 +246,8 @@
       }
     });
     tableMetadata['data'] = tableValues;
-    window.localStorage.setItem('uber.sudoku.tableData', JSON.stringify(tableMetadata));
+    window.localStorage.setItem('ub.sudoku.tableData', JSON.stringify(tableMetadata));
+    this.$elem.trigger('ub.sudoku.state.saved');
   };
 
   /**
@@ -259,7 +262,7 @@
     var i = 0;
     var j = 0;
 
-    var tableData = window.localStorage.getItem('uber.sudoku.tableData');
+    var tableData = window.localStorage.getItem('ub.sudoku.tableData');
     if (tableData) {
       try {
         parsed = JSON.parse(tableData);
@@ -280,6 +283,7 @@
           }
         }
         this.validate();
+        this.$elem.trigger('ub.sudoku.state.loaded');
       } catch (e) {
         // do nothing
       }
@@ -290,7 +294,7 @@
     if (!window.localStorage) {
       return;
     }
-    window.localStorage.removeItem('uber.sudoku.tableData');
+    window.localStorage.removeItem('ub.sudoku.tableData');
   };
 
   /**

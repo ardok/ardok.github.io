@@ -74,8 +74,8 @@ $(function () {
   if (window.localStorage) {
     var $loadStateModal = $('#load-state-modal');
 
-    var tableData = window.localStorage.getItem('uber.sudoku.tableData');
-    var timerData = window.localStorage.getItem('uber.timer.sudoku-timer');
+    var tableData = window.localStorage.getItem('ub.sudoku.tableData');
+    var timerData = window.localStorage.getItem('ub.timer.sudoku-timer');
     if (tableData) {
       // open modal
       $loadStateModal.ubModal('open');
@@ -88,11 +88,17 @@ $(function () {
         }
       });
 
-      $loadStateModal.on('hidden.ub.modal').on('click', function () {
+      $loadStateModal.on('ub.modal.hidden').on('click', function () {
         $sudokuTable.ubSudoku('clearState');
         $sudokuTimer.ubTimer('clearState');
       });
     }
+
+    $sudokuTable.on('ub.sudoku.state.saved', function () {
+      window.UB.Notification.show('State saved');
+    }).on('ub.sudoku.state.loaded', function () {
+      window.UB.Notification.show('State loaded');
+    });
   } else {
     $sudokuTimer.ubTimer();
   }

@@ -34,6 +34,11 @@
    * 4:
    * When caling `ubModal('hide')`, it will delete the entry from the map and will also
    *   try to look whether the id of the modal is in the array. If so, remove it.
+   *
+   *
+   * Events on the modal element (data is put into the modal element (target)):
+   * `ub.modal.shown` -> called when modal gets shown
+   * `ub.modal.hidden` -> called when modal gets hidden
    */
 
   function UBModal(element, options) {
@@ -62,7 +67,7 @@
         self.$body.addClass(UB_MODAL_OPEN_CLASS);
       }
       self.$el.show();
-      self.$el.trigger('shown.ub.modal');
+      self.$el.trigger('ub.modal.shown');
       self.isShown = true;
 
       if (self.$el.hasClass('ub-modal-center')) {
@@ -89,7 +94,7 @@
       }
       $('.ub-modal-backdrop:last-of-type').remove();
       self.$el.hide();
-      self.$el.trigger('hidden.ub.modal');
+      self.$el.trigger('ub.modal.hidden');
       self.isShown = false;
     }
   };

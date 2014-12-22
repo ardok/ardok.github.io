@@ -1,5 +1,11 @@
 (function ($) {
 
+  /**
+   * Events:
+   * `ub.timer.state.saved` -> When state successfully saved into local storage
+   * `ub.timer.state.loaded` -> When state successfully loaded from local storage
+   */
+
   function UBTimer(elem, options) {
     this.$elem = $(elem);
     this.options = options;
@@ -104,7 +110,8 @@
       minute: this.minute,
       second: this.second
     };
-    window.localStorage.setItem('uber.timer.' + this.$elem.attr('id'), JSON.stringify(timeData));
+    window.localStorage.setItem('ub.timer.' + this.$elem.attr('id'), JSON.stringify(timeData));
+    this.$elem.trigger('ub.timer.state.saved');
   };
 
   UBTimer.prototype.loadState = function () {
@@ -112,7 +119,7 @@
       return;
     }
 
-    var timeData = window.localStorage.getItem('uber.timer.' + this.$elem.attr('id'));
+    var timeData = window.localStorage.getItem('ub.timer.' + this.$elem.attr('id'));
     if (timeData) {
       try {
         var parsed = JSON.parse(timeData);
@@ -120,6 +127,7 @@
         this.minute = parseInt(parsed.minute);
         this.second = parseInt(parsed.second);
         this._setTimerText();
+        this.$elem.trigger('ub.timer.state.loaded');
       } catch (e) {
         // do nothing
       }
@@ -130,8 +138,7 @@
     if (!window.localStorage) {
       return;
     }
-
-    window.localStorage.removeItem('uber.timer.' + this.$elem.attr('id'));
+    window.localStorage.removeItem('ub.timer.' + this.$elem.attr('id'));
   };
 
   var old = $.fn.ubTimer;
