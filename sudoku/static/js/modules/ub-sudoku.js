@@ -265,7 +265,6 @@
       boardsPlayed.pop(); // remove the latest one
     }
     boardsPlayed.unshift(index); // prepend the value to the front
-    console.log(index);
     return index;
   }
 
@@ -506,11 +505,6 @@
     this.$elem.trigger('ub.sudoku.start');
   };
 
-  UBSudoku.prototype.setCellValue = function (row, col, val) {
-    var target = 'input[data-row=' + row + '][data-col=' + col + ']';
-    this.$elem.find(target).val(val);
-  };
-
   /**
    * Method to check whether there's an error with either row or column
    * @param isCheckingRow {boolean} `true` if you're checking for row, `false` if you're checking for column
@@ -569,6 +563,10 @@
    * @return {boolean} `true` if there's a duplicate number in the table group
    */
   UBSudoku.prototype.isTableSectionError = function (tableSectionIndex) {
+    if (this.errorTableIndexes.indexOf(tableSectionIndex) > -1) {
+      return true;
+    }
+
     var hasTableSectionError = false;
 
     this.$elem.find('table[data-section=' + tableSectionIndex + ']').each(function () {
@@ -605,19 +603,30 @@
 
   /**
    * Method to check whether a particular cell is good
+   * If not, add the necessary error classes
    * @param rowIndex {number} row index
    * @param colIndex {number} column index
-   * @return {object} it contains keys:
-   * `rowError` -> `true` if row is error
-   * `columnError` -> `true` if column is error
-   * `tableError` -> `true` if the table section is error
    */
   UBSudoku.prototype.checkCell = function (rowIndex, colIndex) {
-    return {
-      rowError: this.isRowError(rowIndex),
-      columnError: this.isColumnError(colIndex),
-      tableError: this.isTableSectionError(this._getTableSectionIndex(rowIndex, colIndex))
-    };
+    if (this.isRowError(rowIndex)) {
+      this.errorRowIndexes.push(rowIndex);
+      this.$elem.find('input[data-row=' + rowIndex + ']').each(function () {
+        $(this).addClass('error');
+      });
+    }
+
+    if (this.isColumnError(colIndex)) {
+      this.errorColIndexes.push(colIndex);
+      this.$elem.find('input[data-col=' + colIndex + ']').each(function () {
+        $(this).addClass('error');
+      });
+    }
+
+    var tableIndex = this._getTableSectionIndex(rowIndex, colIndex);
+    if (this.isTableSectionError(tableIndex)) {
+      this.errorTableIndexes.push(tableIndex);
+      this.$elem.find('table[data-section=' + tableIndex + ']').addClass('error');
+    }
   };
 
   /**
@@ -645,47 +654,25 @@
     var colIndex = 0;
     for (rowIndex = 0; rowIndex < this.rowTotalNum; rowIndex++) {
       for (colIndex = 0; colIndex < this.colTotalNum; colIndex++) {
-        var obj = this.checkCell(rowIndex, colIndex);
-        if (obj.rowError && this.errorRowIndexes.indexOf(rowIndex) === -1) {
-          this.errorRowIndexes.push(rowIndex);
-        }
-        if (obj.columnError && this.errorColIndexes.indexOf(colIndex) === -1) {
-          this.errorColIndexes.push(colIndex);
-        }
-        var tableIndex = this._getTableSectionIndex(rowIndex, colIndex);
-        if (obj.tableError && this.errorTableIndexes.indexOf(tableIndex) === -1) {
-          this.errorTableIndexes.push(tableIndex);
-        }
+        this.checkCell(rowIndex, colIndex);
       }
     }
 
-    // now add error class to each input / table that has error
-    var index = 0;
-    for (index = 0; index < this.errorRowIndexes.length; index++) {
-      this.$elem.find('input[data-row=' + this.errorRowIndexes[index] + ']').each(function () {
-        $(this).addClass('error');
-      });
-    }
-    for (index = 0; index < this.errorColIndexes.length; index++) {
-      this.$elem.find('input[data-col=' + this.errorColIndexes[index] + ']').each(function () {
-        $(this).addClass('error');
-      });
-    }
-    for (index = 0; index < this.errorTableIndexes.length; index++) {
-      this.$elem.find('table[data-section=' + this.errorTableIndexes[index] + ']').addClass('error');
-    }
-
     // check whether there's any error exists
-    // need to make sure that all inputs are filled
-    var allInputsFilled = [];
+    // also need to make sure that all inputs are filled
+    var areAllInputsFilled = true;
     this.$elem.find('input').each(function () {
-      allInputsFilled.push($(this).val() !== '');
+      var $this = $(this);
+      if ($this.val() === '') {
+        areAllInputsFilled = false;
+      }
     });
 
-    if (allInputsFilled.indexOf(false) === -1 &&
-        this.errorTableIndexes.length === 0 &&
-        this.errorRowIndexes.length === 0 &&
-        this.errorColIndexes.length === 0) {
+    var hasNoError = this.errorColIndexes.length === 0 &&
+      this.errorRowIndexes.length === 0 &&
+      this.errorTableIndexes.length === 0;
+
+    if (areAllInputsFilled && hasNoError) {
       // hooray, no error
       this.$elem.find('input').each(function () {
         $(this).addClass('success');
