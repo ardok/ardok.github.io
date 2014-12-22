@@ -14,7 +14,7 @@
   -webkit-transition: color 200ms, opacity 200ms;
   transition: color 200ms, opacity 200ms;
 }
-.page-index .main-toolbar > i:hover {
+html.no-touch .page-index .main-toolbar > i:hover {
   color: #607d8b;
   opacity: 1;
 }
@@ -46,6 +46,9 @@
 .page-index .save-btn,
 .page-index .cheat-fill-btn {
   display: none;
+}
+html.no-localstorage .page-index .save-btn {
+  display: none !important;
 }
 
 .page-index .timer {
@@ -88,7 +91,7 @@
 
 @media all and (min-width: 768px) {
   .page-index .toolbar {
-    max-width: 496px;
+    max-width: 478px;
   }
   .page-index .btn {
     padding: 10px 20px;

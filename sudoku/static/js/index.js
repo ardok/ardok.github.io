@@ -25,7 +25,7 @@ $(function () {
     $cheatFillBtn.removeAttr('disabled');
     $saveBtn.removeAttr('disabled');
 
-    if (window.localStorage) {
+    if (Modernizr.localstorage) {
       $saveBtn.show();
     }
 

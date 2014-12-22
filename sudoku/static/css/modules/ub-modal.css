@@ -33,7 +33,7 @@
   -webkit-transition: color 200ms;
   transition: color 200ms;
 }
-.ub-modal .ub-modal-close:hover {
+html.no-touch .ub-modal .ub-modal-close:hover {
   color: #607d8b;
   opacity: 0.5;
 }
@@ -80,7 +80,7 @@
   -webkit-transition: color 200ms;
   transition: color 200ms;
 }
-.ub-modal .modal-footer > a:hover {
+html.no-touch .ub-modal .modal-footer > a:hover {
   color: #455a64;
 }
 

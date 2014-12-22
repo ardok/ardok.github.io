@@ -9,6 +9,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
+<link href="http://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet" type="text/css">
+
 <!-- TODO: combine and minify this block (output: all.min.css) -->
 <link rel="stylesheet" href="static/css/lib/font-awesome.min.css">
 <link rel="stylesheet" href="static/css/base.css">
@@ -25,7 +27,7 @@
 <body class="page-index">
 
 <div class="main-toolbar">
-  <i class="fa fa-cog"
+  <i class="fa fa-cog no-select"
      data-ub-toggle="modal"
      data-ub-modal-target="#settings-modal"></i>
 </div>
@@ -40,24 +42,25 @@
     <span data-ub-timer="second">00</span>
   </div>
   <div class="toolbar top">
-    <button class="btn start-btn"
+    <!-- could use SCSS so that we could just put no-select style into btn -->
+    <button class="btn start-btn no-select"
             data-ub-sudoku-trigger="reset"
             data-ub-sudoku-target="#sudoku-table">
       Start
     </button>
-    <button class="btn validate-btn"
+    <button class="btn validate-btn no-select"
             data-ub-sudoku-trigger="validate"
             data-ub-sudoku-target="#sudoku-table">
       Validate
     </button>
-    <button class="btn save-btn"
+    <button class="btn save-btn no-select"
             data-ub-sudoku-trigger="saveState"
             data-ub-sudoku-target="#sudoku-table"
             data-ub-timer-trigger="saveState"
             data-ub-timer-target="#sudoku-timer">
       Save
     </button>
-    <button class="btn cheat-fill-btn"
+    <button class="btn cheat-fill-btn no-select"
             disabled="disabled"
             data-ub-sudoku-trigger="cheatFill"
             data-ub-sudoku-target="#sudoku-table">
@@ -77,7 +80,7 @@
 <div class="ub-modal no-footer ub-modal-center" id="load-state-modal">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="ub-modal-close" data-ub-dismiss="modal">
+      <div class="ub-modal-close no-select" data-ub-dismiss="modal">
         &times;
       </div>
       <div class="modal-title">
@@ -97,7 +100,7 @@
 <div class="ub-modal no-footer ub-modal-center" id="settings-modal">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="ub-modal-close" data-ub-dismiss="modal">
+      <div class="ub-modal-close no-select" data-ub-dismiss="modal">
         &times;
       </div>
       <div class="modal-title">
@@ -106,6 +109,7 @@
       <div class="modal-body">
         <div class="row">
           <input type="checkbox"
+                 class="no-select"
                  id="settings-input-change"
                  data-ub-sudoku-trigger="toggleValidationMethod"
                  data-ub-sudoku-target="#sudoku-table">
@@ -123,10 +127,11 @@
 
 <div id="toast-flash" class="toast">
   <div class="message"></div>
-  <a class="close">&times;</a>
+  <a class="close no-select">&times;</a>
 </div>
 
 <!-- TODO: combine and minify this block (output: all.min.js) -->
+<script type="text/javascript" src="static/js/lib/modernizr.custom.49198.js"></script>
 <script type="text/javascript" src="static/js/lib/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="static/js/window-ub.js"></script>
 <!-- endblock -->
