@@ -1,11 +1,11 @@
-.page-index .fixed-toolbar {
-  position: fixed;
+.page-index .main-toolbar {
+  position: absolute;
   top: 15px;
   right: 15px;
   bottom: auto;
   left: auto;
 }
-.page-index .fixed-toolbar > i {
+.page-index .main-toolbar > i {
   cursor: pointer;
   color: #90a4ae;
   opacity: 0.8;
@@ -14,7 +14,7 @@
   -webkit-transition: color 200ms, opacity 200ms;
   transition: color 200ms, opacity 200ms;
 }
-.page-index .fixed-toolbar > i:hover {
+.page-index .main-toolbar > i:hover {
   color: #607d8b;
   opacity: 1;
 }
