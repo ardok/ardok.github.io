@@ -65,3 +65,7 @@ I like to re-use code.
 * ub-lazy-src
 
 This one is too simple, basically just moving `data-ub-lazy-src` into `src` attribute. Could actually remove this, but will leave this here for now.
+
+Extras
+---
+I'm using ImageOptim app for MacOS to reduce the success gif file. This app is amazing in general to reduce image size.
