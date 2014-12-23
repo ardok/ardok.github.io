@@ -520,8 +520,9 @@
       }
 
       // now, we need to limit the value inputted into numbers only
+      $this.off('keyup.ub.sudoku.limit');
       var prevInput = '';
-      $this.on('keyup', function (evt) {
+      $this.on('keyup.ub.sudoku.limit', function (evt) {
         // we set the input type to be number, hence it pretty sucks since
         //   when there's a non-number input, `.val()` will return empty string
         var inputValue = $this.val();
