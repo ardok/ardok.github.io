@@ -336,6 +336,16 @@
           $this.attr('data-row', row);
           $this.attr('data-col', col);
           $this.attr('disabled', 'disabled'); // disable everything first
+
+          // disable our input[type=number] number scrolling
+          $this.on('focus', function () {
+            $(this).on('mousewheel.disableScroll', function (e) {
+              e.preventDefault()
+            });
+          }).on('blur', function () {
+            $(this).off('mousewheel.disableScroll');
+          });
+
         });
       });
     });
