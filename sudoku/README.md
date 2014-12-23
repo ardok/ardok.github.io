@@ -25,7 +25,7 @@ Feel free to try it by hitting Save button about 5 or 6 times :)
 * Setting to enable validation as you type. Setting is located on top right of the page.
 * Pass in `mode=god` as url param to view `Cheat Fill` button.
 
-Bugs?
+Known bugs?
 ---
 * You can type really fast and switch input focus and the "validation" to keep the char length to be 1.
 You can even type a char and switch focus right away and the char will stay there.
