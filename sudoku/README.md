@@ -23,7 +23,6 @@ As the modal closes, it will remove the state from local storage.
 Feel free to try it by hitting Save button about 5 or 6 times :)
 * Timer.
 * Setting to enable validation as you type. Setting is located on top right of the page.
-* Pass in `mode=god` as url param to view `Cheat Fill` button.
 
 Known bugs?
 ---
@@ -37,7 +36,7 @@ Wishlist (what needs to be added / improved?)
 * Make the validation check for individual check faster so that the "as you type validation" method will work faster.
 * Make the validator for input to work correctly i.e. only 1 char and only number.
 * Board generator method. Oh, really wish to have this.
-* Solver method. `Cheat Fill` button now is just a solver using fixed table data.
+* Solver method.
 * Use SCSS.
 * Minified CSS / JS.
 * Use templating engine.

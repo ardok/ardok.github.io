@@ -1,5 +1,4 @@
 $(function () {
-  var $cheatFillBtn = $('.cheat-fill-btn');
   var $startBtn = $('.start-btn');
   var $validateBtn = $('.validate-btn');
   var $saveBtn = $('.save-btn');
@@ -11,11 +10,6 @@ $(function () {
   var $gif = $gifContainer.find('.success-gif');
   var $spinner = $gifContainer.find('.spinner');
 
-  if (window.location.search.indexOf('mode=god') > -1) {
-    // TODO this can be done with templating engine
-    $cheatFillBtn.show();
-  }
-
   var saveTipTimeout = null;
 
   var sudokuStartFunc = function (evt) {
@@ -24,7 +18,6 @@ $(function () {
     $startBtn.text('New Game');
     
     $validateBtn.show().removeAttr('disabled');
-    $cheatFillBtn.removeAttr('disabled');
     $saveBtn.removeAttr('disabled');
 
     if (Modernizr.localstorage) {
@@ -54,7 +47,6 @@ $(function () {
 
     // deal with buttons
     $validateBtn.attr('disabled', 'disabled');
-    $cheatFillBtn.attr('disabled', 'disabled');
     $saveBtn.attr('disabled', 'disabled');
 
     // We would like to show our success gif when sudoku game is over with a success!
