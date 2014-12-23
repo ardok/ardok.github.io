@@ -20,6 +20,10 @@ body {
   -webkit-touch-callout: none;
 }
 
+.center {
+  text-align: center;
+}
+
 /* BUTTON */
 .btn {
   display: block;

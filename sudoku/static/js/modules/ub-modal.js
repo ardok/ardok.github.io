@@ -162,7 +162,8 @@
   // modal close listeners
   $(document).on('click.ub.modal-close', '.ub-modal', function (evt) {
     // the target will be `ub-modal` itself when you click outside the modal dialog
-    if ($(evt.target).hasClass('ub-modal')) {
+    var $target = $(evt.target);
+    if ($target.hasClass('ub-modal') && $target.attr('disabled') !== 'disabled') {
       hideMostTopModal();
     }
   }).on('click.ub.modal-close', '[data-ub-dismiss=modal]', function () {

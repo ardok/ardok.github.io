@@ -97,8 +97,28 @@ $(function () {
 
     }
 
+    var stateSavedTimes = 0;
+    var stateSavedTimesResetTimeout = null;
+    var $abuseModal = $('#abuse-modal');
     $sudokuTable.on('ub.sudoku.state.saved', function () {
       window.UB.Notification.show('State saved');
+
+      // show a warning if user abuses the save state button :(
+      // abuse = clicking the save state button more than 5 times within 3 seconds
+      // (this timer will reset every time user clicks the save button)
+      stateSavedTimes = stateSavedTimes + 1;
+      clearTimeout(stateSavedTimesResetTimeout);
+      stateSavedTimesResetTimeout = setTimeout(function () {
+        stateSavedTimes = 0;
+      }, 3000);
+      if (stateSavedTimes >= 5) {
+        $abuseModal.find('img').ubLazySrc();
+        $abuseModal.attr('disabled', 'disabled');
+        $abuseModal.ubModal('show');
+        setTimeout(function () {
+          $abuseModal.removeAttr('disabled');
+        }, 2000);
+      }
     }).on('ub.sudoku.state.loaded', function () {
       window.UB.Notification.show('State loaded');
     });

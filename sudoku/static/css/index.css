@@ -89,6 +89,10 @@ html.no-localstorage .page-index .save-btn {
   vertical-align: middle;
 }
 
+.page-index #abuse-modal img {
+  width: 100%;
+}
+
 @media all and (min-width: 768px) {
   .page-index .toolbar {
     max-width: 478px;
