@@ -3,8 +3,6 @@ Sudoku Game
 
 This is just a simple sudoku game.
 
-Right now, the board is hard coded, no board generator just yet.
-
 External libraries used
 ---
 * jQuery -> awesome JS wrapper
@@ -35,7 +33,6 @@ Wishlist (what needs to be added / improved?)
 * Seems like `validate` method can be improved to run faster.
 * Make the validation check for individual check faster so that the "as you type validation" method will work faster.
 * Make the validator for input to work correctly i.e. only 1 char and only number.
-* Board generator method. Oh, really wish to have this.
 * Solver method.
 * Use SCSS.
 * Minified CSS / JS.
