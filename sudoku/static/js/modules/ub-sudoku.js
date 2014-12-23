@@ -301,10 +301,6 @@
     this._init();
   }
 
-  UBSudoku.prototype._rowColTo81 = function (row, col) {
-    return (row * 9) + col;
-  };
-
   /**
    * Method to initialize the Uber sudoku game :)
    * @private
@@ -357,7 +353,8 @@
     if (this.isValidatingOnType) {
 
       var self = this;
-      this.$elem.find('input').on('keyup.ub.sudoku.validating', function () {
+      self.validate();
+      self.$elem.find('input').on('keyup.ub.sudoku.validating', function () {
         var $this = $(this);
         var row = parseInt($this.attr('data-row'));
         var col = parseInt($this.attr('data-col'));
@@ -630,7 +627,7 @@
    * @private
    */
   UBSudoku.prototype._getTableSectionIndex = function (rowIndex, colIndex) {
-    return Math.floor(rowIndex / 3) + Math.floor(colIndex / 3);
+    return (Math.floor(rowIndex / 3) * 3) + Math.floor(colIndex / 3);
   };
 
   /**
@@ -712,7 +709,6 @@
       // trigger success event, we could pass in some extra params here `.trigger('...', [..., ..., ...])`
       this.$elem.trigger('ub.sudoku.done');
     }
-
   };
 
   /**
