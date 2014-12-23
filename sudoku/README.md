@@ -23,7 +23,7 @@ As the modal closes, it will remove the state from local storage.
 * Setting to enable validation as you type.
 * Pass in `mode=god` as url param to view `Cheat Fill` button.
 
-What needs to be added / improved?
+Wishlist (what needs to be added / improved?)
 ---
 * Seems like `validate` method can be improved to run faster.
 * Make the validation check for individual check faster so that the "as you type validation" method will work faster.
@@ -34,6 +34,7 @@ What needs to be added / improved?
 * Use templating engine.
 * Unit testing! Since most of my JS is in module format, it's not going to be that hard to add unit tests.
 Each module should have its own unit test.
+* Testing on IE (I don't have any IE).
 
 Directory?
 ---
@@ -69,6 +70,16 @@ I like to re-use code.
 * ub-lazy-src
 
 This one is too simple, basically just moving `data-ub-lazy-src` into `src` attribute. Could actually remove this, but will leave this here for now.
+
+Testing
+---
+No unit testing, as stated in "Wishlist" section.
+
+I've only tested on: 
+* iOS 8 simulator (iPhone + iPad).
+* Physical (Android) Nexus 5 device (5.0.1) using Chrome Beta and Chrome.
+* Latest Safari, Firefox, and Chrome on MacOS (10.10.1).
+
 
 Extras
 ---
