@@ -515,6 +515,7 @@
       if (self.BOARD_SHOW[row][col] === 1) {
         $this.val(self.BOARD_VALUE[row][col]).addClass('in').attr('disabled', 'disabled');
       } else {
+        $this.val('');
         $this.removeAttr('disabled');
       }
 
