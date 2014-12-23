@@ -384,7 +384,7 @@
   UBSudoku.prototype.reset = function () {
     this._clearErrors();
 
-    this.$elem.find('input').removeClass('in');
+    this.$elem.find('input').removeClass('in').removeClass('success');
 
     // use setTimeout so that animation can play in different frame
     var self = this;
