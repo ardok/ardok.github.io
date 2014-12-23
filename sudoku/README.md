@@ -16,7 +16,8 @@ What can this game do?
 ---
 * Generate table based on hard-coded data table (just pick at random index).
 * Save state into local storage. To load, just refresh the page or close your tab and open again. 
-It will open up a modal asking whether you'd like to load from saved state. 
+It will open up a modal asking whether you'd like to load from saved state.
+Safari private browsing does not support local storage, hence you could see that the save button is not there.
 As the modal closes, it will remove the state from local storage.
 * Timer.
 * Setting to enable validation as you type.
@@ -25,11 +26,14 @@ As the modal closes, it will remove the state from local storage.
 What needs to be added / improved?
 ---
 * Seems like `validate` method can be improved to run faster.
+* Make the validation check for individual check faster so that the "as you type validation" method will work faster.
 * Board generator method.
 * Solver method.
 * Use SCSS.
-* Minified css / js.
+* Minified CSS / JS.
 * Use templating engine.
+* Unit testing! Since most of my JS is in module format, it's not going to be that hard to add unit tests.
+Each module should have its own unit test.
 
 Directory?
 ---
