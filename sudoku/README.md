@@ -14,22 +14,30 @@ External libraries used
 
 What can this game do?
 ---
-* Generate table based on hard-coded data table (just pick at random index).
-* Save state into local storage. To load, just refresh the page or close your tab and open again. 
+* Generate table based on hard-coded data table (just pick at random index, there are 7 in total).
+* Save state into local storage. To load, just refresh the page or close your tab and open again.
 It will open up a modal asking whether you'd like to load from saved state.
 Safari private browsing does not support local storage, hence you could see that the save button is not there.
 As the modal closes, it will remove the state from local storage.
 * Reminder to not abuse the "Save" button if user clicks it a lot.
+Feel free to try it by hitting Save button about 5 or 6 times :)
 * Timer.
-* Setting to enable validation as you type.
+* Setting to enable validation as you type. Setting is located on top right of the page.
 * Pass in `mode=god` as url param to view `Cheat Fill` button.
+
+Bugs?
+---
+* You can type really fast and switch input focus and the "validation" to keep the char length to be 1.
+You can even type a char and switch focus right away and the char will stay there.
+I'm sure there's a better way to do this validation, but I just can't think anything off the top of my head.
 
 Wishlist (what needs to be added / improved?)
 ---
 * Seems like `validate` method can be improved to run faster.
 * Make the validation check for individual check faster so that the "as you type validation" method will work faster.
-* Board generator method.
-* Solver method.
+* Make the validator for input to work correctly i.e. only 1 char and only number.
+* Board generator method. Oh, really wish to have this.
+* Solver method. `Cheat Fill` button now is just a solver using fixed table data.
 * Use SCSS.
 * Minified CSS / JS.
 * Use templating engine.
@@ -86,3 +94,6 @@ I've only tested on:
 Extras
 ---
 I'm using ImageOptim app for MacOS to reduce the success gif file. This app is amazing in general to reduce image size.
+
+Wait for 30 seconds after the game progresses and there will be a "tip" to save the state.
+This is using jquery.cookie to check whether use has seen it or not, and it expires in one day.
