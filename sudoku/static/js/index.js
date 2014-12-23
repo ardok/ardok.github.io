@@ -32,6 +32,18 @@ $(function () {
     // hide the success gif
     $gifContainer.removeClass('show');
     $gif.removeClass('show');
+
+    if (Modernizr.localstorage) {
+      // show some helpful tip on saving state after 30s
+      // if user hasn't seen it in the last 24 hours (1 day)
+      if ($.cookie('ub.sudoku.shown.saveTip') !== 'true') {
+        setTimeout(function () {
+          // set the cookie to expire in 1 day
+          $.cookie('ub.sudoku.shown.saveTip', 'true', { expires: 1 });
+          window.UB.Notification.show('Click "Save" button to save your current table state');
+        }, 30000);
+      }
+    }
   };
 
   var sudokuDoneFunc = function (evt) {
@@ -122,14 +134,6 @@ $(function () {
     }).on('ub.sudoku.state.loaded', function () {
       window.UB.Notification.show('State loaded');
     });
-
-    // show some helpful tip on saving state after 30s
-    if ($.cookie('ub.sudoku.shown.saveTip') !== 'true') {
-      setTimeout(function () {
-        $.cookie('ub.sudoku.shown.saveTip', 'true', { expires: 1 });
-        window.UB.Notification.show('Click "Save" button to save your current table state');
-      }, 30000);
-    }
   } else {
     $sudokuTimer.ubTimer();
   }
