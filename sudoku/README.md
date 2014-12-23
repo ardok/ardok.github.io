@@ -48,7 +48,8 @@ Directory?
 
 CSS styles?
 ---
-Using Roboto font. Tried to use a bit of material design :P
+* Using Roboto font. Tried to use a bit of material design :P
+* Mobile-first styles, can be seen by the media query (all and min-width 768px). Why 768? Because that's tablet portrait width in general.
 
 Modules?
 ---
