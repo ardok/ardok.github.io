@@ -16,6 +16,8 @@ $(function () {
     $cheatFillBtn.show();
   }
 
+  var saveTipTimeout = null;
+
   var sudokuStartFunc = function (evt) {
     // start timer, show / hide buttons
     $sudokuTimer.ubTimer('start');
@@ -36,8 +38,8 @@ $(function () {
     if (Modernizr.localstorage) {
       // show some helpful tip on saving state after 30s
       // if user hasn't seen it in the last 24 hours (1 day)
-      if ($.cookie('ub.sudoku.shown.saveTip') !== 'true') {
-        setTimeout(function () {
+      if ($.cookie('ub.sudoku.shown.saveTip') !== 'true' && saveTipTimeout === null) {
+        saveTipTimeout = setTimeout(function () {
           // set the cookie to expire in 1 day
           $.cookie('ub.sudoku.shown.saveTip', 'true', { expires: 1 });
           window.UB.Notification.show('Click "Save" button to save your current table state');

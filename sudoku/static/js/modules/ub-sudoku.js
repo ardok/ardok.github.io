@@ -384,12 +384,13 @@
   UBSudoku.prototype.reset = function () {
     this._clearErrors();
 
-    // use timeout so that animation can play in different frame
+    this.$elem.find('input').removeClass('in');
+
+    // use setTimeout so that animation can play in different frame
     var self = this;
     setTimeout(function () {
       self.generateData();
     }, 0);
-
     this.$elem.trigger('ub.sudoku.reset');
   };
 
@@ -513,10 +514,9 @@
       var col = parseInt($this.attr('data-col'));
 
       if (self.BOARD_SHOW[row][col] === 1) {
-        $this.val(self.BOARD_VALUE[row][col]).addClass('in').attr('disabled', 'disabled');
+        $this.val(self.BOARD_VALUE[row][col]).attr('disabled', 'disabled').addClass('in');
       } else {
-        $this.val('');
-        $this.removeAttr('disabled');
+        $this.val('').removeAttr('disabled');
       }
 
       // now, we need to limit the value inputted into numbers only
