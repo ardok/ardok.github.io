@@ -122,6 +122,14 @@ $(function () {
     }).on('ub.sudoku.state.loaded', function () {
       window.UB.Notification.show('State loaded');
     });
+
+    // show some helpful tip on saving state after 30s
+    if ($.cookie('ub.sudoku.shown.saveTip') !== 'true') {
+      setTimeout(function () {
+        $.cookie('ub.sudoku.shown.saveTip', 'true', { expires: 1 });
+        window.UB.Notification.show('Click "Save" button to save your current table state');
+      }, 30000);
+    }
   } else {
     $sudokuTimer.ubTimer();
   }
