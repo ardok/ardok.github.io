@@ -382,9 +382,7 @@
    * Reset the state of the table
    */
   UBSudoku.prototype.reset = function () {
-    this.$elem.find('input').each(function () {
-      $(this).val('').removeClass('error').removeClass('success').removeClass('in');
-    });
+    this._clearErrors();
 
     // use timeout so that animation can play in different frame
     var self = this;
