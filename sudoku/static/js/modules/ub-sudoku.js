@@ -283,6 +283,7 @@
     this.options = options;
 
     // data to use
+    this.boardIndex = -1;
     this.BOARD_VALUE = null;
     this.BOARD_SHOW = null;
 
@@ -415,6 +416,7 @@
       row: this.rowTotalNum,
       col: this.colTotalNum,
       isValidatingOnType: this.isValidatingOnType,
+      boardIndex: this.boardIndex,
       data: []
     };
     var tableValues = [];
@@ -474,6 +476,11 @@
         this._setInputsValidationMethod();
         $('[data-ub-sudoku-trigger=toggleValidationMethod]').prop('checked', this.isValidatingOnType);
 
+        // set board
+        this.boardIndex = parsed.boardIndex;
+        this.BOARD_SHOW = BOARD_SHOW[this.boardIndex];
+        this.BOARD_VALUE = BOARD_VALUE[this.boardIndex];
+
         this.validate();
         this.$elem.trigger('ub.sudoku.state.loaded');
       } catch (e) {
@@ -501,9 +508,9 @@
 
     // TODO this will be our generator
     // unfortunately, because I'm lame, we will just use hard-coded value for now
-    var index = randBoardIndex();
-    this.BOARD_VALUE = BOARD_VALUE[index];
-    this.BOARD_SHOW = BOARD_SHOW[index];
+    this.boardIndex = randBoardIndex();
+    this.BOARD_VALUE = BOARD_VALUE[this.boardIndex];
+    this.BOARD_SHOW = BOARD_SHOW[this.boardIndex];
 
     var self = this;
     // put the values in
