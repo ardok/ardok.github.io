@@ -1,7 +1,7 @@
 Sudoku Game
 ===
 
-This is just a simple sudoku game.
+This is just a simple sudoku game. If you'd like to run this locally, just drag and drop (or open) `index.html` into your browser, and it should run.
 
 External libraries used
 ---
