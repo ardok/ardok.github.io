@@ -27,8 +27,8 @@ Feel free to try it by hitting Save button about 5 or 6 times :)
 
 Known bugs?
 ---
-* You can type really fast and switch input focus and the "validation" to keep the char length to be 1.
-You can even type a char and switch focus right away and the char will stay there.
+* You can type really fast and switch input focus, and the "validation" to keep the char length to be 1 will fail.
+You can even type a char and switch focus right away, and the char will stay there.
 I'm sure there's a better way to do this validation, but I just can't think anything off the top of my head.
 
 Wishlist (what needs to be added / improved?)
