@@ -67,5 +67,5 @@ No unit testing, as stated in "Wishlist" section.
 
 I've only tested on:
 * iOS 8 simulator (iPhone + iPad).
-* Physical (Android) Nexus 5 device (5.0.1) using Chrome Beta and Chrome.
+* Physical (Android) Nexus 5 device (5.0.1) using Chrome Beta and Chrome, same for Nexus 6.
 * Latest Safari, Firefox, and Chrome on MacOS (10.10.1).
