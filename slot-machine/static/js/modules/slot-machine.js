@@ -157,7 +157,19 @@
     this.$elem.on('slotMachine.cheatEnd', cheatEnd);
   }
 
-  SlotMachine.DEFAULTS = {};
+  SlotMachine.DEFAULTS = {
+    PRIZES: [
+      {
+        text: 'a cup of coffee'
+      },
+      {
+        text: 'a cup of tea'
+      },
+      {
+        text: 'a cup of espresso'
+      }
+    ]
+  };
 
   SlotMachine.prototype._init = function () {
     var self = this;

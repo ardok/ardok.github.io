@@ -12,3 +12,9 @@
   width: 50px;
   margin: 30px auto 0 auto;
 }
+.page-index .success-gif {
+  margin-top: 20px;
+}
+.page-index .success-gif img {
+  width: 100%;
+}

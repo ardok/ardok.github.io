@@ -5,21 +5,24 @@ $(function () {
   var $resultModal = $('#result-modal');
 
   $slotMachine.on('slotMachine.win', function (evt, wonIndex) {
-    var wonGoods = '';
-    if (wonIndex === 0) {
-      wonGoods = 'a cup of coffee';
-    } else if (wonIndex === 1) {
-      wonGoods = 'a cup of tea';
-    } else if (wonIndex === 2) {
-      wonGoods = 'a cup of espresso';
+    var data = $slotMachine.data('slotMachine');
+    var prize = {};
+    if (data) {
+      prize = data.options.PRIZES[wonIndex];
+    } else {
+      prize = {
+        text: 'unknown'
+      };
     }
 
     $resultModal.find('.modal-title').text('Congratulations!');
-    $resultModal.find('.modal-body').text('You have won ' + wonGoods + '!');
+    $resultModal.find('.modal-body .text').text('You have won ' + prize.text + '!');
+    $resultModal.find('.modal-body .success-gif').show();
     $resultModal.ksModal('open');
   }).on('slotMachine.lose', function () {
     $resultModal.find('.modal-title').text('Sorry!');
-    $resultModal.find('.modal-body').text('You did not win anything :(');
+    $resultModal.find('.modal-body .text').text('You did not win anything :(');
+    $resultModal.find('.modal-body .success-gif').hide();
     $resultModal.ksModal('open');
   });
 

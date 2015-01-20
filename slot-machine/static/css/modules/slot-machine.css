@@ -26,10 +26,11 @@
   float: right;
   border-radius: 20px;
   position: relative;
+  cursor: pointer;
 }
 [data-slot-machine] .wheel .ball {
   position: absolute;
-  background-color: #5C6BC0;
+  background-color: #B71C1C;
   width: 16px;
   height: 16px;
   border-radius: 50%;
