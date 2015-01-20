@@ -1,0 +1,22 @@
+.espresso_tamper, .tea_strainer, .coffee_filter {
+  background: url("../img/sprites/machine_sprites.png") no-repeat;
+}
+
+.espresso_tamper {
+  background-position: 0 0;
+  width: 64px;
+  height: 64px;
+}
+
+.tea_strainer {
+  background-position: 0 -65px;
+  width: 64px;
+  height: 64px;
+}
+
+.coffee_filter {
+  background-position: 0 -131px;
+  width: 64px;
+  height: 64px;
+}
+

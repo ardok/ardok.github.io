@@ -1,0 +1,22 @@
+.espresso_beans, .coffee_grounds, .loose_tea {
+  background: url("../img/sprites/base_ingre_sprites.png") no-repeat;
+}
+
+.espresso_beans {
+  background-position: 0 0;
+  width: 64px;
+  height: 64px;
+}
+
+.coffee_grounds {
+  background-position: 0 -131px;
+  width: 64px;
+  height: 64px;
+}
+
+.loose_tea {
+  background-position: 0 -65px;
+  width: 64px;
+  height: 64px;
+}
+

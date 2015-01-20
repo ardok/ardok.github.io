@@ -1,0 +1,22 @@
+.coffee_maker, .teapot, .espresso_machine {
+  background: url("../img/sprites/machine_sprites.png") no-repeat;
+}
+
+.coffee_maker {
+  background-position: 0 -131px;
+  width: 64px;
+  height: 64px;
+}
+
+.teapot {
+  background-position: 0 -65px;
+  width: 64px;
+  height: 64px;
+}
+
+.espresso_machine {
+  background-position: 0 0;
+  width: 64px;
+  height: 64px;
+}
+

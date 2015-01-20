@@ -1,0 +1,14 @@
+.page-index .container {
+  padding-top: 20px;
+}
+.page-index .container h1 {
+  text-align: center;
+}
+.page-index .slot-machine-container {
+  margin-top: 30px;
+}
+.page-index .cheat-btn {
+  display: none;
+  width: 50px;
+  margin: 30px auto 0 auto;
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Not sure whether I want this to be crawl-able -->
+  <!--<meta name="robots" content="noindex">-->
+
+  <!-- if you have Android 5.0+, you know what this is ;) -->
+  <meta name="theme-color" content="#607d8b">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+  <link href="http://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet" type="text/css">
+
+  <!-- TODO: combine and minify this block (output: all.min.css) -->
+  <link rel="stylesheet" href="static/css/lib/font-awesome.min.css">
+  <link rel="stylesheet" href="static/css/base.css">
+  <!-- endblock -->
+
+  <!-- TODO: combine and minify this block (output: index.min.css) -->
+  <link rel="stylesheet" href="static/css/modules/ks-modal.css">
+  <link rel="stylesheet" href="static/css/modules/slot-machine.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <!-- endblock -->
+
+  <title>Slot Machine</title>
+</head>
+<body class="page-index">
+
+<div class="container">
+  <h1>Slot Machine</h1>
+
+  <div class="slot-machine-container"
+       data-slot-machine
+       data-slot-machine-wheel="#wheel-0"
+       id="slot-machine">
+    <div data-slot="0"></div>
+    <div data-slot="1"></div>
+    <div data-slot="2"></div>
+    <div class="wheel" id="wheel-0">
+      <div class="ball"></div>
+    </div>
+  </div>
+
+  <a class="btn cheat-btn"
+     data-slot-machine-target="#slot-machine"
+     data-slot-machine-trigger="cheatEnd">Cheat</a>
+</div>
+
+<div class="ks-modal ks-modal-center" id="result-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="ks-modal-close no-select" data-ks-dismiss="modal">
+        &times;
+      </div>
+      <div class="modal-title">
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <a data-ks-dismiss="modal">OK</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TODO: combine and minify this block (output: all.min.js) -->
+<script type="text/javascript" src="static/js/lib/jquery-2.1.1.min.js"></script>
+<!-- endblock -->
+
+<!-- TODO: combine and minify this block (output: index.min.js) -->
+<script type="text/javascript" src="static/js/modules/ks-modal.js"></script>
+<script type="text/javascript" src="static/js/modules/slot-machine.js"></script>
+<script type="text/javascript" src="static/js/index.js"></script>
+<!-- endblock -->
+
+</body>
+</html>

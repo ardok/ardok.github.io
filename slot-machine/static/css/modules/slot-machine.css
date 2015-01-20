@@ -1,0 +1,66 @@
+[data-slot-machine] {
+  overflow: hidden;
+  width: 230px;
+  margin: 0 auto;
+}
+[data-slot-machine] [data-slot] {
+  width: 64px;
+  height: 64px;
+  float: left;
+}
+[data-slot-machine] [data-slot="0"] {
+  background: url("../../img/sprites/machine_sprites.png") no-repeat;
+  border-radius: 4px 0 0 4px;
+}
+[data-slot-machine] [data-slot="1"] {
+  background: url("../../img/sprites/filter_sprites.png") no-repeat;
+}
+[data-slot-machine] [data-slot="2"] {
+  background: url("../../img/sprites/base_ingre_sprites.png") no-repeat;
+  border-radius: 0 4px 4px 0;
+}
+[data-slot-machine] .wheel {
+  height: 64px;
+  width: 20px;
+  background-color: #ffffff;
+  float: right;
+  border-radius: 20px;
+  position: relative;
+}
+[data-slot-machine] .wheel .ball {
+  position: absolute;
+  background-color: #5C6BC0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  top: 3px;
+  left: 2px;
+}
+[data-slot-machine] .wheel.clicked .ball {
+  -webkit-animation: animateBall 600ms both;
+  animation: animateBall 600ms both;
+}
+
+
+@-webkit-keyframes animateBall {
+  0.00% {
+    top: 3px;
+  }
+  50% {
+    top: 45px;
+  }
+  100.00% {
+    top: 3px;
+  }
+}
+@keyframes animateBall {
+  0.00% {
+    top: 3px;
+  }
+  50% {
+    top: 45px;
+  }
+  100.00% {
+    top: 3px;
+  }
+}
