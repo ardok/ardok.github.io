@@ -15,6 +15,8 @@ For example, if the reels show coffee maker, coffee filter, and coffee grounds, 
 External libraries used
 ---
 * jQuery -> awesome JS wrapper
+* Modernizr -> feature detection
+* Fastclick -> remove touch delay
 
 What can this game do?
 ---
