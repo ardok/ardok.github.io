@@ -22,13 +22,13 @@
   };
 
   Slot.prototype._animatePos = function () {
-    this.$elem.animate({
-      'background-position-y': this.pos + 'px'
-    }, 1, 'linear');
+    this.$elem.css({
+      'background-position': '0px ' + this.pos + 'px'
+    });
   };
 
   Slot.prototype._adjustPosOnSpeed = function () {
-    this.pos -= this.speed;
+    this.pos = Math.floor(this.pos - this.speed);
     if (this.pos < Slot.SPRITE_POS[0]) {
       this.pos = 0;
     }
@@ -48,7 +48,7 @@
     self.speed = 0; // always reset the speed to 0
     self.interval = setInterval(function () {
       if (self.speed < self.options.maxSpeed) {
-        self.speed += self.options.step;
+        self.speed = Math.floor(self.speed + self.options.step);
       }
       self._adjustPosOnSpeed();
       self._animatePos();
@@ -82,17 +82,19 @@
 
       if (self.speed <= self.options.minSpeed) {
         self.pos = self.getFinalPosition();
-        self.$elem.animate({
-          'background-position-y': self.pos + 'px'
-        }, 500, 'linear', function () {
-          if (typeof options.callback === 'function') {
-            options.callback();
-          }
+        self.$elem.css({
+          'background-position': '0px ' + self.pos + 'px'
         });
 
         // stop spinning
         clearInterval(self.interval);
         self.isSpinning = false;
+
+        setTimeout(function () {
+          if (typeof options.callback === 'function') {
+            options.callback();
+          }
+        }, 400);
       }
     }, 100);
   };
