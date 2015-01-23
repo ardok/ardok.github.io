@@ -1,0 +1,29 @@
+body {
+  background-color: #f6f1ea;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.page-index .title {
+  text-align: center;
+}
+.page-index .btn-container {
+  text-align: center;
+  margin-top: 40px;
+}
+.page-index .btn-container .center {
+  display: inline-block;
+}
+
+.btn {
+  padding: 10px 15px;
+  background-color: #5C6BC0;
+  color: #ffffff;
+  cursor: pointer;
+  -webkit-transition: background 200ms;
+  transition: background 200ms;
+}
+.btn:hover {
+  background-color: #3949AB;
+}
