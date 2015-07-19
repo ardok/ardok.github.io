@@ -47,8 +47,7 @@ html.no-touch .page-index .main-toolbar > i:hover {
   padding: 5px 10px;
 }
 .page-index .validate-btn,
-.page-index .save-btn,
-.page-index .cheat-fill-btn {
+.page-index .save-btn {
   display: none;
 }
 html.no-localstorage .page-index .save-btn {

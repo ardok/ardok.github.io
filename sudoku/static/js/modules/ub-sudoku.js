@@ -59,216 +59,6 @@
     '</table>';
 
   /**
-   * possible values of the board
-   *
-   * first data is from:
-   * http://en.wikipedia.org/wiki/File:Sudoku-by-L2G-20050714.svg
-   * http://en.wikipedia.org/wiki/File:Sudoku-by-L2G-20050714_solution.svg
-   *
-   * the rests are from: http://www.nikoli.com/en/puzzles/sudoku/
-   */
-  // TODO use a generator
-  var BOARD_VALUE = [
-    [
-      [5, 3, 4, 6, 7, 8, 9, 1, 2],
-      [6, 7, 2, 1, 9, 5, 3, 4, 8],
-      [1, 9, 8, 3, 4, 2, 5, 6, 7],
-      [8, 5, 9, 7, 6, 1, 4, 2, 3],
-      [4, 2, 6, 8, 5, 3, 7, 9, 1],
-      [7, 1, 3, 9, 2, 4, 8, 5, 6],
-      [9, 6, 1, 5, 3, 7, 2, 8, 4],
-      [2, 8, 7, 4, 1, 9, 6, 3, 5],
-      [3, 4, 5, 2, 8, 6, 1, 7, 9]
-    ],
-    // --- easy
-    [
-      [2, 3, 9, 7, 1, 5, 4, 6, 8],
-      [1, 4, 6, 2, 8, 3, 9, 5, 7],
-      [8, 7, 5, 4, 9, 6, 2, 3, 1],
-      [3, 9, 7, 6, 5, 8, 1, 4, 2],
-      [5, 2, 8, 1, 4, 9, 6, 7, 3],
-      [6, 1, 4, 3, 2, 7, 5, 8, 9],
-      [4, 6, 2, 8, 7, 1, 3, 9, 5],
-      [9, 8, 3, 5, 6, 2, 7, 1, 4],
-      [7, 5, 1, 9, 3, 4, 8, 2, 6]
-    ],
-    [
-      [2, 5, 3, 1, 4, 7, 6, 9, 8],
-      [4, 9, 1, 3, 6, 8, 7, 5, 2],
-      [7, 6, 8, 5, 2, 9, 4, 3, 1],
-      [1, 3, 2, 9, 7, 6, 8, 4, 5],
-      [8, 7, 6, 4, 5, 1, 9, 2, 3],
-      [9, 4, 5, 8, 3, 2, 1, 7, 6],
-      [5, 8, 7, 6, 9, 3, 2, 1, 4],
-      [3, 1, 9, 2, 8, 4, 5, 6, 7],
-      [6, 2, 4, 7, 1, 5, 3, 8, 9]
-    ],
-    // --- medium
-    [
-      [9, 7, 4, 3, 6, 8, 1, 5, 2],
-      [3, 5, 8, 1, 2, 7, 6, 9, 4],
-      [6, 1, 2, 5, 9, 4, 7, 8, 3],
-      [5, 6, 7, 4, 8, 1, 3, 2, 9],
-      [8, 2, 1, 7, 3, 9, 4, 6, 5],
-      [4, 9, 3, 2, 5, 6, 8, 7, 1],
-      [1, 8, 9, 6, 4, 5, 2, 3, 7],
-      [2, 4, 6, 9, 7, 3, 5, 1, 8],
-      [7, 3, 5, 8, 1, 2, 9, 4, 6]
-    ],
-    [
-      [4, 8, 9, 6, 5, 3, 2, 1, 7],
-      [1, 2, 3, 4, 7, 9, 5, 8, 6],
-      [5, 6, 7, 8, 2, 1, 9, 4, 3],
-      [9, 1, 2, 3, 6, 8, 4, 7, 5],
-      [8, 5, 6, 2, 4, 7, 3, 9, 1],
-      [7, 3, 4, 9, 1, 5, 6, 2, 8],
-      [6, 7, 1, 5, 9, 2, 8, 3, 4],
-      [2, 4, 8, 1, 3, 6, 7, 5, 9],
-      [3, 9, 5, 7, 8, 4, 1, 6, 2]
-    ],
-    // --- hard
-    [
-      [6, 4, 1, 7, 3, 9, 8, 2, 5],
-      [7, 5, 2, 8, 1, 6, 9, 4, 3],
-      [8, 3, 9, 2, 5, 4, 6, 1, 7],
-      [1, 6, 7, 3, 9, 5, 4, 8, 2],
-      [4, 8, 5, 1, 6, 2, 7, 3, 9],
-      [9, 2, 3, 4, 7, 8, 5, 6, 1],
-      [3, 1, 6, 9, 4, 7, 2, 5, 8],
-      [5, 7, 8, 6, 2, 1, 3, 9, 4],
-      [2, 9, 4, 5, 8, 3, 1, 7, 6]
-    ],
-    [
-      [4, 3, 8, 1, 7, 2, 6, 9, 5],
-      [6, 1, 7, 9, 5, 4, 3, 8, 2],
-      [2, 9, 5, 8, 3, 6, 4, 7, 1],
-      [1, 7, 3, 6, 4, 9, 2, 5, 8],
-      [5, 6, 9, 7, 2, 8, 1, 3, 4],
-      [8, 2, 4, 5, 1, 3, 9, 6, 7],
-      [9, 8, 2, 4, 6, 5, 7, 1, 3],
-      [3, 5, 1, 2, 9, 7, 8, 4, 6],
-      [7, 4, 6, 3, 8, 1, 5, 2, 9]
-    ]
-    // feel free to add more board here, and don't forget to add the visibility at the same index
-    // into `BOARD_SHOW`
-  ];
-
-  /**
-   * 0 is hidden, 1 is shown
-   * The index matches with `BOARD_VALUE`
-   */
-  // TODO use a generator
-  var BOARD_SHOW = [
-    [
-      [1, 1, 0, 0, 1, 0, 0, 0, 0],
-      [1, 0, 0, 1, 1, 1, 0, 0, 0],
-      [0, 1, 1, 0, 0, 0, 0, 1, 0],
-      [1, 0, 0, 0, 1, 0, 0, 0, 1],
-      [1, 0, 0, 1, 0, 1, 0, 0, 1],
-      [1, 0, 0, 0, 1, 0, 0, 0, 1],
-      [0, 1, 0, 0, 0, 0, 1, 1, 0],
-      [0, 0, 0, 1, 1, 1, 0, 0, 1],
-      [0, 0, 0, 0, 1, 0, 0, 1, 1]
-    ],
-    [
-      [1, 1, 0, 0, 0, 0, 0, 1, 1],
-      [1, 0, 0, 0, 0, 0, 0, 1, 1],
-      [0, 0, 1, 1, 0, 1, 0, 0, 0],
-      [0, 0, 1, 1, 0, 1, 1, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 1, 1, 0, 1, 1, 0, 0],
-      [0, 0, 0, 1, 0, 1, 1, 0, 0],
-      [1, 1, 0, 0, 0, 0, 0, 0, 1],
-      [1, 1, 0, 0, 0, 0, 0, 1, 1]
-    ],
-    [
-      [0, 1, 1, 1, 0, 0, 0, 1, 0],
-      [1, 0, 0, 0, 1, 0, 0, 1, 1],
-      [1, 0, 0, 0, 1, 0, 0, 0, 0],
-      [1, 0, 0, 0, 1, 0, 0, 0, 0],
-      [0, 1, 1, 1, 0, 1, 1, 1, 0],
-      [0, 0, 0, 0, 1, 0, 0, 0, 1],
-      [0, 0, 0, 0, 1, 0, 0, 0, 0],
-      [1, 1, 0, 0, 1, 0, 0, 0, 1],
-      [0, 1, 0, 0, 0, 1, 1, 1, 0]
-    ],
-    [
-      [1, 0, 0, 0, 0, 1, 1, 0, 0],
-      [0, 0, 0, 1, 1, 0, 0, 1, 0],
-      [0, 0, 1, 0, 0, 0, 1, 0, 1],
-      [0, 0, 1, 0, 0, 1, 0, 0, 1],
-      [0, 1, 0, 0, 1, 0, 0, 1, 0],
-      [1, 0, 0, 1, 0, 0, 1, 0, 0],
-      [1, 0, 1, 0, 0, 0, 1, 0, 0],
-      [0, 1, 0, 0, 1, 1, 0, 0, 0],
-      [0, 0, 1, 1, 0, 0, 0, 0, 1]
-    ],
-    [
-      [0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [1, 1, 1, 1, 0, 0, 0, 0, 0],
-      [1, 1, 1, 1, 0, 0, 0, 0, 0],
-      [1, 1, 1, 1, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 1, 1, 1, 1],
-      [0, 0, 0, 0, 0, 1, 1, 1, 1],
-      [0, 0, 0, 0, 0, 1, 1, 1, 1],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ],
-    [
-      [0, 0, 1, 0, 0, 0, 1, 0, 0],
-      [0, 1, 0, 0, 1, 0, 0, 1, 0],
-      [0, 0, 0, 1, 0, 0, 0, 0, 1],
-      [0, 0, 1, 0, 0, 1, 0, 1, 0],
-      [1, 0, 0, 0, 1, 0, 0, 0, 1],
-      [0, 1, 0, 1, 0, 0, 1, 0, 0],
-      [1, 0, 0, 0, 0, 1, 0, 0, 0],
-      [0, 1, 0, 0, 1, 0, 0, 1, 0],
-      [0, 0, 1, 0, 0, 0, 1, 0, 0]
-    ],
-    [
-      [0, 0, 0, 0, 1, 0, 1, 0, 1],
-      [0, 0, 0, 0, 0, 1, 0, 1, 0],
-      [1, 0, 0, 0, 0, 1, 0, 1, 0],
-      [0, 1, 1, 0, 0, 0, 1, 0, 0],
-      [1, 0, 0, 0, 0, 0, 0, 0, 1],
-      [0, 0, 1, 0, 0, 0, 1, 1, 0],
-      [0, 1, 0, 1, 0, 0, 0, 0, 1],
-      [0, 1, 0, 1, 0, 0, 0, 0, 0],
-      [1, 0, 1, 0, 1, 0, 0, 0, 0]
-    ]
-  ];
-
-  /**
-   * We don't want to show the board that has been played in the past 3 games.
-   * Just for more variation...
-   * Again, TODO would be nice to have a board generator
-   */
-  var boardsPlayed = [];
-  function randBoardIndex() {
-    if (BOARD_VALUE.length !== BOARD_SHOW.length) {
-      return -1;
-    }
-    var getRandomBoardIndex = function () {
-      return Math.floor(Math.random() * BOARD_VALUE.length);
-    };
-    var index = getRandomBoardIndex();
-    var tries = 0;
-    while (boardsPlayed.indexOf(index) > -1) {
-      index = getRandomBoardIndex();
-      tries = tries + 1;
-      if (tries >= 20) {
-        // just try 20 times...
-        break;
-      }
-    }
-    if (boardsPlayed.length >= 3) {
-      boardsPlayed.pop(); // remove the latest one
-    }
-    boardsPlayed.unshift(index); // prepend the value to the front
-    return index;
-  }
-
-  /**
    * UBSudoku event triggers on the element:
    * `ub.sudoku.reset` -> When the game resets.
    * `ub.sudoku.start` -> When the game is done generating data into the table.
@@ -281,11 +71,6 @@
   function UBSudoku(elem, options) {
     this.$elem = $(elem);
     this.options = options;
-
-    // data to use
-    this.boardIndex = -1;
-    this.BOARD_VALUE = null;
-    this.BOARD_SHOW = null;
 
     // hard code the total cell num to be 9x9
     this.rowTotalNum = 9;
@@ -345,6 +130,24 @@
             });
           }).on('blur', function () {
             $(this).off('mousewheel.disableScroll');
+          });
+
+          var prevInput = '';
+          $this.on('keyup.ub.sudoku.limit', function (evt) {
+            // we set the input type to be number, hence it pretty sucks since
+            //   when there's a non-number input, `.val()` will return empty string
+            var inputValue = $this.val();
+
+            // TODO there should be an easier way to do this
+            if (inputValue.length > 1) {
+              $this.val(inputValue.charAt(0));
+            } else if (inputValue === '0') {
+              $this.val('');
+            } else if (this.checkValidity && this.checkValidity()) {
+              prevInput = inputValue;
+            } else {
+              $this.val(prevInput);
+            }
           });
 
         });
@@ -416,7 +219,6 @@
       row: this.rowTotalNum,
       col: this.colTotalNum,
       isValidatingOnType: this.isValidatingOnType,
-      boardIndex: this.boardIndex,
       data: []
     };
     var tableValues = [];
@@ -476,11 +278,6 @@
         this._setInputsValidationMethod();
         $('[data-ub-sudoku-trigger=toggleValidationMethod]').prop('checked', this.isValidatingOnType);
 
-        // set board
-        this.boardIndex = parsed.boardIndex;
-        this.BOARD_SHOW = BOARD_SHOW[this.boardIndex];
-        this.BOARD_VALUE = BOARD_VALUE[this.boardIndex];
-
         this.validate();
         this.$elem.trigger('ub.sudoku.state.loaded');
       } catch (e) {
@@ -503,49 +300,42 @@
     if (this.isGenerating) {
       return;
     }
-
-    this.isGenerating = true;
-
-    // TODO this will be our generator
-    // unfortunately, because I'm lame, we will just use hard-coded value for now
-    this.boardIndex = randBoardIndex();
-    this.BOARD_VALUE = BOARD_VALUE[this.boardIndex];
-    this.BOARD_SHOW = BOARD_SHOW[this.boardIndex];
-
     var self = this;
-    // put the values in
-    this.$elem.find('input').each(function () {
-      var $this = $(this);
+    self.isGenerating = true;
+    self.$elem.find('input').val('').removeAttr('disabled');
 
-      var row = parseInt($this.attr('data-row'));
-      var col = parseInt($this.attr('data-col'));
+    // how many numbers should be shown?
+    // 17 is hard, 22 is medium, 27 is easy
+    var gameSettingsShown = [17, 21, 25];
+    var gameSettingsShownIndex = Math.floor(Math.random() * 3);
 
-      if (self.BOARD_SHOW[row][col] === 1) {
-        $this.val(self.BOARD_VALUE[row][col]).attr('disabled', 'disabled').addClass('in');
-      } else {
-        $this.val('').removeAttr('disabled');
+    var totalShown = gameSettingsShown[gameSettingsShownIndex];
+    var shownSoFar = 0;
+    var rowIndex = -1;
+    var colIndex = -1;
+    var inputValue = -1;
+    var $input = null;
+    var checks = {};
+
+    var doFillAndCheck = function () {
+      inputValue = Math.floor(Math.random() * 9) + 1;
+      $input.val(inputValue);
+      checks = self.checkCell(rowIndex, colIndex);
+    };
+
+    while (shownSoFar < totalShown) {
+      rowIndex = Math.floor(Math.random() * this.rowTotalNum);
+      colIndex = Math.floor(Math.random() * this.colTotalNum);
+      $input = this.$elem.find('input[data-row=' + rowIndex + '][data-col=' + colIndex + ']');
+      if ($input.val() !== '') {
+        continue;
       }
-
-      // now, we need to limit the value inputted into numbers only
-      $this.off('keyup.ub.sudoku.limit');
-      var prevInput = '';
-      $this.on('keyup.ub.sudoku.limit', function (evt) {
-        // we set the input type to be number, hence it pretty sucks since
-        //   when there's a non-number input, `.val()` will return empty string
-        var inputValue = $this.val();
-
-        // TODO there should be an easier way to do this
-        if (inputValue.length > 1) {
-          $this.val(inputValue.charAt(0));
-        } else if (inputValue === '0') {
-          $this.val('');
-        } else if (this.checkValidity && this.checkValidity()) {
-          prevInput = inputValue;
-        } else {
-          $this.val(prevInput);
-        }
-      });
-    });
+      do {
+        doFillAndCheck();
+      } while (checks.rowError || checks.colError || checks.sectionError);
+      $input.attr('disabled', 'disabled').addClass('in');
+      shownSoFar = shownSoFar + 1;
+    }
 
     this.isGenerating = false;
     this.$elem.trigger('ub.sudoku.start');
@@ -649,29 +439,51 @@
 
   /**
    * Method to check whether a particular cell is good
+   * @param rowIndex {number} row index
+   * @param colIndex {number} column index
+   * @return object
+   * {
+   * rowError -> boolean, true if row has error
+   * colError -> boolean, true if column has error
+   * sectionIndex -> number, the table section index
+   * sectionError -> boolean, true if table section has error
+   * }
+   */
+  UBSudoku.prototype.checkCell = function (rowIndex, colIndex) {
+    var sectionIndex = this._getTableSectionIndex(rowIndex, colIndex);
+    return {
+      rowError: this.isRowError(rowIndex),
+      colError: this.isColumnError(colIndex),
+      sectionIndex: sectionIndex,
+      sectionError: this.isTableSectionError(sectionIndex)
+    };
+  };
+
+  /**
+   * Method to check whether a particular cell is good
    * If not, add the necessary error classes
    * @param rowIndex {number} row index
    * @param colIndex {number} column index
    */
-  UBSudoku.prototype.checkCell = function (rowIndex, colIndex) {
-    if (this.isRowError(rowIndex)) {
+  UBSudoku.prototype.checkCellAndMark = function (rowIndex, colIndex) {
+    var checks = this.checkCell(rowIndex, colIndex);
+    if (checks.rowError) {
       this.errorRowIndexes.push(rowIndex);
       this.$elem.find('input[data-row=' + rowIndex + ']').each(function () {
         $(this).addClass('error');
       });
     }
 
-    if (this.isColumnError(colIndex)) {
+    if (checks.colError) {
       this.errorColIndexes.push(colIndex);
       this.$elem.find('input[data-col=' + colIndex + ']').each(function () {
         $(this).addClass('error');
       });
     }
 
-    var tableIndex = this._getTableSectionIndex(rowIndex, colIndex);
-    if (this.isTableSectionError(tableIndex)) {
-      this.errorTableIndexes.push(tableIndex);
-      this.$elem.find('table[data-section=' + tableIndex + ']').addClass('error');
+    if (checks.sectionError) {
+      this.errorTableIndexes.push(checks.sectionIndex);
+      this.$elem.find('table[data-section=' + checks.sectionIndex + ']').addClass('error');
     }
   };
 
@@ -700,7 +512,7 @@
     var colIndex = 0;
     for (rowIndex = 0; rowIndex < this.rowTotalNum; rowIndex++) {
       for (colIndex = 0; colIndex < this.colTotalNum; colIndex++) {
-        this.checkCell(rowIndex, colIndex);
+        this.checkCellAndMark(rowIndex, colIndex);
       }
     }
 
@@ -726,23 +538,6 @@
       // trigger success event, we could pass in some extra params here `.trigger('...', [..., ..., ...])`
       this.$elem.trigger('ub.sudoku.done');
     }
-  };
-
-  /**
-   * Method to fill all cells right away
-   *
-   * THIS IS NOT A SOLVER
-   * This method just fetched the actual data from `BOARD_VALUE`
-   */
-  UBSudoku.prototype.cheatFill = function () {
-    // just fill the answer in
-    var self = this;
-    this.$elem.find('input').each(function () {
-      var $this = $(this);
-      var row = parseInt($this.attr('data-row'));
-      var col = parseInt($this.attr('data-col'));
-      $this.val(self.BOARD_VALUE[row][col]);
-    });
   };
 
   var old = $.fn.ubSudoku;

@@ -3,8 +3,6 @@ Sudoku Game
 
 This is just a simple sudoku game. If you'd like to run this locally, just drag and drop (or open) `index.html` into your browser, and it should run.
 
-Right now, the board is hard coded, no board generator just yet.
-
 External libraries used
 ---
 * jQuery -> awesome JS wrapper
@@ -23,7 +21,6 @@ As the modal closes, it will remove the state from local storage.
 Feel free to try it by hitting Save button about 5 or 6 times :)
 * Timer.
 * Setting to enable validation as you type. Setting is located on top right of the page.
-* Pass in `mode=god` as url param to view `Cheat Fill` button.
 
 Known bugs?
 ---
@@ -36,8 +33,7 @@ Wishlist (what needs to be added / improved?)
 * Seems like `validate` method can be improved to run faster.
 * Make the validation check for individual check faster so that the "as you type validation" method will work faster.
 * Make the validator for input to work correctly i.e. only 1 char and only number.
-* Board generator method. Oh, really wish to have this.
-* Solver method. `Cheat Fill` button now is just a solver using fixed table data.
+* Solver method.
 * Use SCSS.
 * Minified CSS / JS.
 * Use templating engine.
